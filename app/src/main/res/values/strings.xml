@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Weathery</string>
+    <string name="Rain">Rain</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="humidity">Humidity</string>
+    <string name="today">Today</string>
+    <string name="next_7day">Next 7 Days</string>
 </resources>
