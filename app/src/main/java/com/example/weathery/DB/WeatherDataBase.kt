@@ -1,23 +1,25 @@
-package com.example.weathery.Model
+package com.example.weathery
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.example.weathery.Model.ForecastItemEntity
+import com.example.weathery.Model.WeatherDao
 
-@Database(entities = [City::class, weather_forecasts_list::class, Weather::class], version = 1, exportSchema = false)
-abstract class WeatherDataBase : RoomDatabase() {
+@Database(entities = [ForecastItemEntity::class], version = 1, exportSchema = false)
+abstract class WeatherDatabase : RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
 
     companion object {
         @Volatile
-        private var INSTANCE: WeatherDataBase? = null
+        private var INSTANCE: WeatherDatabase? = null
 
-        fun getDatabase(context: Context): WeatherDataBase {
+        fun getDatabase(context: Context): WeatherDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    WeatherDataBase::class.java,
+                    WeatherDatabase::class.java,
                     "weather_database"
                 ).build()
                 INSTANCE = instance
