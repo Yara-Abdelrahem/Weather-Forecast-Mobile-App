@@ -5,4 +5,5 @@
     <string name="humidity">Humidity</string>
     <string name="today">Today</string>
     <string name="next_7day">Next 7 Days</string>
+    <string name="api_key">"9a3fd0649e44a6fb8826038be3aa48fc"</string>
 </resources>
