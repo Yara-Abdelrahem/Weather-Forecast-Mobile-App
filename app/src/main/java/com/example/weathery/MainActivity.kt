@@ -1,20 +1,29 @@
 package com.example.weathery
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weathery.ViewModel.WeatherViewModel
 import com.example.weathery.databinding.ActivityMainBinding
+import com.example.weathery.work.*
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var locHelper: LocationHelper
     private val viewModel: WeatherViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -25,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,16 +46,31 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         setupRecyclerView()
         setupObservers()
-
         // Replace with your API key
         val apiKey = "9a3fd0649e44a6fb8826038be3aa48fc"
-        // Example coordinates (Cairo, Egypt)
-        val latitude = 30.0
-        val longitude = 31.0
-        viewModel.loadForecasts(latitude, longitude, apiKey)
+        locHelper = LocationHelper(this)
+
+        locHelper.requestLocation { lat, lon ->
+            viewModel.loadForecasts(lat, lon, apiKey)
+        }
+//        locationHelper = LocationHelper(this)
+//        locationHelper.getLocation()
+//        lifecycleScope.launch {
+//            try {
+//                // Get location first
+//                val location = locationHelper.getLocation()
+//                location?.let {
+//                    // Load forecasts after getting location
+//                    viewModel.loadForecasts(it.lat, it.long, apiKey)
+//                } ?:  Log.e("Erorrr","Location not available")
+//            } catch (e: SecurityException) {
+//                Log.e("Erorrr","Location permission required")
+//            }
+//        }
+//        viewModel.loadForecasts(lat , lon,  apiKey)
+
     }
 
     private fun setupRecyclerView() {
@@ -78,4 +103,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == locationHelper.localPermissionCode) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                locationHelper.getLocation()
+//            } else {
+//                Toast.makeText(
+//                    this,
+//                    "Permission denied - features might be limited",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
+//    }
 }

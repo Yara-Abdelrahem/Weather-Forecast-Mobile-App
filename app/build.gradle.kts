@@ -43,6 +43,8 @@ android {
 
 dependencies {
     implementation(libs.androidx.swiperefreshlayout)
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation ("androidx.core:core-ktx:1.10.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
@@ -70,6 +72,9 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
