@@ -36,7 +36,7 @@ class SelectFavoriteLocationFragment : Fragment() {
     private lateinit var btnSelectLocation: Button
     private var selectedGeoPoint: GeoPoint? = null
     private var selectedCityName: String = "Unknown"
-
+    private lateinit var geoPoint : GeoPoint
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,7 +73,6 @@ class SelectFavoriteLocationFragment : Fragment() {
                 mapView.overlays.clear()
                 mapView.overlays.add(marker)
                 mapView.invalidate()
-
                 // Perform reverse geocoding
                 getCityName(geoPoint.latitude, geoPoint.longitude)
 
@@ -82,19 +81,17 @@ class SelectFavoriteLocationFragment : Fragment() {
                 false
             }
         }
-
         btnSelectLocation.setOnClickListener {
+
             selectedGeoPoint?.let { geoPoint ->
-                val intent = Intent(requireContext(), FavoriteActivity::class.java).apply {
-                    Log.i("Locationnnnn", "$selectedCityName ----- ${geoPoint.latitude}----${geoPoint.longitude}")
-                    putExtra("latitude", geoPoint.latitude)
-                    putExtra("longitude", geoPoint.longitude)
-                    putExtra("cityName", selectedCityName)
-                }
-                startActivity(intent)
+                Log.i("Locationnnnn", "$selectedCityName ----- ${geoPoint.latitude}----${geoPoint.longitude}")
+                (activity as? FavoriteActivity)?.onLocationPicked(geoPoint.latitude ,geoPoint.longitude , selectedCityName)
+                parentFragmentManager.popBackStack()
+
             } ?: run {
                 Toast.makeText(requireContext(), "Please select a location on the map.", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 

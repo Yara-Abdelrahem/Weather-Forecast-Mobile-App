@@ -1,5 +1,6 @@
-package com.example.weathery.View
+package com.example.weathery.View.Adapter
 
+import android.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,13 @@ class SimpleStringAdapter(
 ) : RecyclerView.Adapter<SimpleStringAdapter.VH>() {
 
     inner class VH(v: View) : RecyclerView.ViewHolder(v) {
-        val tv = v.findViewById<TextView>(android.R.id.text1)
+        val tv = v.findViewById<TextView>(R.id.text1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        VH(LayoutInflater.from(parent.context)
-            .inflate(android.R.layout.simple_list_item_1, parent, false))
+        VH(
+            LayoutInflater.from(parent.context)
+            .inflate(R.layout.simple_list_item_1, parent, false))
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.tv.text = items[position]

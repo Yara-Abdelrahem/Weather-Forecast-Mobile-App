@@ -1,5 +1,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,8 +13,9 @@
         android:layout_height="wrap_content"
         android:text="Select Location"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"/>
 </FrameLayout>
+
 
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->
