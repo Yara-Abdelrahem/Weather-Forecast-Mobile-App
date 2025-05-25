@@ -1,34 +1,16 @@
 package com.example.weathery.View
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
-import android.view.MotionEvent
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.weathery.Model.FavoriteCity
 import com.example.weathery.Model.FavoriteCityRepositry
 import com.example.weathery.Model.LocalFavorityCityDatasource
-import com.example.weathery.Model.WeatherDao
 import com.example.weathery.R
-import com.example.weathery.View.Adapter.SimpleStringAdapter
 import com.example.weathery.ViewModel.FavoriteCityViewModel
 import com.example.weathery.WeatherDatabase
 import kotlinx.coroutines.launch
-import org.osmdroid.config.Configuration
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
 
 class FavoriteActivity : AppCompatActivity(), OnLocationPickedListener {
     lateinit var favcity_viewmode :FavoriteCityViewModel

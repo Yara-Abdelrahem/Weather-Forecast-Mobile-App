@@ -105,7 +105,7 @@ class SelectFavoriteLocationFragment : Fragment() {
                 try {
                     val address = response.getJSONObject("address")
                     selectedCityName = address.optString("city", address.optString("town", "Unknown"))
-                    Toast.makeText(requireContext(), "City: $selectedCityName", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), "City: $selectedCityName", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "Parsing error", Toast.LENGTH_SHORT).show()
                 }

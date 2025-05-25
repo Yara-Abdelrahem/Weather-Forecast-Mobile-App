@@ -15,8 +15,9 @@ class FavoriteCityViewModel (var repo : FavoriteCityRepositry): ViewModel() {
 
     }
 
-    suspend fun getAllFavCity(){
+    suspend fun getAllFavCity() : List<FavoriteCity>{
         favcitylist.value = repo.getFavCities()
+        return favcitylist.value
     }
     suspend fun insertFavCity(city: FavoriteCity){
         repo.insertFavCity(city)
