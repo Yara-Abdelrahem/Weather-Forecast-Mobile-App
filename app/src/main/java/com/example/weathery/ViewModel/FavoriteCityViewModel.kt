@@ -8,12 +8,8 @@ import com.example.weathery.Model.FavoriteCityRepositry
 import kotlinx.coroutines.launch
 
 class FavoriteCityViewModel (var repo : FavoriteCityRepositry): ViewModel() {
-    var favcitylist : MutableLiveData<List<FavoriteCity>> = MutableLiveData<List<FavoriteCity>>()
+    private var favcitylist : MutableLiveData<List<FavoriteCity>> = MutableLiveData<List<FavoriteCity>>()
     var Fav_city_ret = favcitylist
-
-    init {
-
-    }
 
     suspend fun getAllFavCity() : List<FavoriteCity>{
         favcitylist.value = repo.getFavCities()

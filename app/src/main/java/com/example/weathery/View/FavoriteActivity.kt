@@ -12,7 +12,7 @@ import com.example.weathery.ViewModel.FavoriteCityViewModel
 import com.example.weathery.WeatherDatabase
 import kotlinx.coroutines.launch
 
-class FavoriteActivity : AppCompatActivity(), OnLocationPickedListener {
+class FavoriteActivity : AppCompatActivity() {
     lateinit var favcity_viewmode :FavoriteCityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class FavoriteActivity : AppCompatActivity(), OnLocationPickedListener {
             .commit()
     }
 
-    override  fun onLocationPicked(lat: Double, lon: Double, city: String) {
+      fun onLocationPicked(lat: Double, lon: Double, city: String) {
         // Remove the map fragment
         supportFragmentManager.popBackStack()
         // Add to list and notify adapter

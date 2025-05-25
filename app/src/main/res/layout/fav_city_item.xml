@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/fav_city_linearlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
+    android:layout_height="wrap_content"
+    android:id="@+id/fav_city_linearlayout">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_city_name"
             android:layout_width="262dp"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:textSize="20dp"
-            android:text="TextView" />
+            android:clickable="true"
+            android:text="TextView"
+            android:textSize="20dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_delete_fav_city"
             android:layout_width="127dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/delete" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
