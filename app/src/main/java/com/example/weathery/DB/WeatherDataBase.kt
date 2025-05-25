@@ -4,11 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.weathery.Model.AlertItem
 import com.example.weathery.Model.FavoriteCity
 import com.example.weathery.Model.ForecastItemEntity
 import com.example.weathery.Model.WeatherDao
 
-@Database(entities = [ForecastItemEntity::class, FavoriteCity::class], version = 1, exportSchema = false)
+@Database(entities = [ForecastItemEntity::class, FavoriteCity::class, AlertItem::class], version = 1, exportSchema = false)
 abstract class WeatherDatabase : RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
 

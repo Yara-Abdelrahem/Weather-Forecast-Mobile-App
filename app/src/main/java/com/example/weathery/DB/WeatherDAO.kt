@@ -16,6 +16,7 @@ interface WeatherDao {
     @Query("DELETE FROM forecast_items")
     suspend fun clearAll()
 
+    //--------------------------------------------------------------
 
     @Insert
     suspend fun insertFavorite(fav_city : FavoriteCity)
@@ -25,4 +26,14 @@ interface WeatherDao {
 
     @Delete
     suspend fun delete_fav_city(fav_city : FavoriteCity)
+
+    //--------------------------------------------------------------
+    @Insert
+    suspend fun insertAlert(alertItem: AlertItem)
+
+    @Query("SELECT * FROM AlertTable")
+    suspend fun getAllAlerts(): List<AlertItem>
+
+    @Delete
+    suspend fun deleteAlert(alertItem: AlertItem)
 }
