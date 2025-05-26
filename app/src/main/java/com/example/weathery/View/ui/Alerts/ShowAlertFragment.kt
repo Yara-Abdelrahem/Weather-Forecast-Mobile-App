@@ -1,17 +1,15 @@
-package com.example.weathery.View
+package com.example.weathery.View.ui.Alerts
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
 import com.example.weathery.R
-import com.example.yourapp.view.SelectTimeFragment
-import com.example.yourapp.viewmodel.AlarmViewModel
+import com.example.weathery.View.INavFragmaent
+import com.example.weathery.View.ui.Alerts.SelectTimeFragment
+import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
 
 class ShowAlertFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -23,12 +21,9 @@ class ShowAlertFragment : Fragment() {
 
         val fab = view.findViewById<Button>(R.id.fab)
         fab.setOnClickListener {
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frameLayoutAlarm, SelectTimeFragment())
-                .addToBackStack(null)
-                .commit()
+            val activity = requireActivity() as INavFragmaent
+
+            activity.navigateTo(SelectTimeFragment(),false)
         }
     }
 }
-

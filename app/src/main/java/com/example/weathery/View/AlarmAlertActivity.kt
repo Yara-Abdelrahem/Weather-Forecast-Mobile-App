@@ -9,7 +9,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weathery.R
 import com.example.weathery.Service.AlarmService
-import com.example.yourapp.view.SelectTimeFragment
+import com.example.weathery.View.ui.Alerts.ShowAlertFragment
+import com.example.weathery.View.ui.Alerts.SelectTimeFragment
 
 class AlarmAlertActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer

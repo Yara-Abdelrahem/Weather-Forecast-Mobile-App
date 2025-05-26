@@ -20,9 +20,6 @@ class LocationHelper(private val activity: AppCompatActivity) {
     private var locationCallback: LocationCallback? = null
     private var pendingLocationCallback: ((Double, Double) -> Unit)? = null
 
-    /**
-     * 1️⃣ Call this to check/request permissions and then fetch location.
-     */
     @MainThread
     fun requestLocation(onResult: (lat: Double, lon: Double) -> Unit) {
         if (hasLocationPermissions()) {
@@ -38,16 +35,9 @@ class LocationHelper(private val activity: AppCompatActivity) {
             )
         }
     }
-
-    /**
-     * 2️⃣ In Activity.onDestroy(), call this to avoid memory leaks.
-     */
     fun stop() {
         locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
     }
-
-    // ——— Helpers ——— //
-
     private fun hasLocationPermissions(): Boolean {
         return ActivityCompat.checkSelfPermission(
             activity, Manifest.permission.ACCESS_FINE_LOCATION

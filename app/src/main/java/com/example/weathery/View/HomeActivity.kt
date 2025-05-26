@@ -12,9 +12,15 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
+import com.example.weathery.View.ui.Alerts.ShowAlertFragment
+import com.example.weathery.View.ui.FavoriteCity.FavoriteFragment
+import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
+import com.example.weathery.View.ui.home.HomeFragment
 import com.example.weathery.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() , INavFragmaent{
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
@@ -23,18 +29,15 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
+        binding.appBarHome.contentHome.fragmentContainer
         setSupportActionBar(binding.appBarHome.toolbar)
 
-        binding.appBarHome.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
-        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_home)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -42,8 +45,36 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_fav_city, R.id.nav_alert, R.id.nav_setting
             ), drawerLayout
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+
+        binding.navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+
+                    navigateTo(HomeFragment(),true)
+                }
+
+                R.id.nav_fav_city -> {
+
+                    navigateTo(ShowFavoriteFragment(),true)
+                }
+
+                R.id.nav_alert -> {
+                    navigateTo(ShowAlertFragment(),true)
+                }
+
+                R.id.nav_setting -> {
+                    // Handle Settings click
+                }
+            }
+
+            // Close drawer after selection
+            val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+            drawer.closeDrawer(GravityCompat.START)
+            true
+        }
+        navigateTo(HomeFragment(),false)
+      //  setupActionBarWithNavController(navController, appBarConfiguration)
+    //    navView.setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -51,9 +82,16 @@ class HomeActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.home, menu)
         return true
     }
+    public override  fun navigateTo(fragment: Fragment, addToBackstack: Boolean) {
+        val transaction =
+            getSupportFragmentManager()
+                .beginTransaction()
+                .replace(binding.appBarHome.contentHome.fragmentContainer.getId(), fragment)
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_home)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        if (addToBackstack) {
+            transaction.addToBackStack(null)
+        }
+        transaction.commit()
     }
+
 }

@@ -22,14 +22,6 @@ class AlarmService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d("AlarmService", "onStartCommand called")
         val message = intent?.getStringExtra("message") ?: "Alarm!"
-
-        // Launch the alert activity
-//        val alertIntent = Intent(this, AlertActivity::class.java).apply {
-//            putExtra("message", message)
-//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        }
-//        startActivity(alertIntent)
-
         showNotification(message)
         return START_NOT_STICKY
     }

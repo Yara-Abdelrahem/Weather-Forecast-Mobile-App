@@ -1,11 +1,11 @@
-package com.example.weathery.View
+package com.example.weathery.View.ui.FavoriteCity
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +14,14 @@ import com.example.weathery.Model.FavoriteCityRepositry
 import com.example.weathery.Model.LocalFavorityCityDatasource
 import com.example.weathery.R
 import com.example.weathery.View.Adapter.FavCityAdapter
+import com.example.weathery.View.FavoriteActivity
+import com.example.weathery.View.IFavClickListener
+import com.example.weathery.View.INavFragmaent
 import com.example.weathery.ViewModel.FavoriteCityViewModel
 import com.example.weathery.WeatherDatabase
 import kotlinx.coroutines.launch
 
-class ShowFavoriteFragment : Fragment()  , IFavClickListener{
+class ShowFavoriteFragment : Fragment()  , IFavClickListener {
     private lateinit var viewModel : FavoriteCityViewModel
 
     private lateinit var rvFavorites: RecyclerView
@@ -47,25 +50,31 @@ class ShowFavoriteFragment : Fragment()  , IFavClickListener{
         btn_add_favorite = view.findViewById(R.id.btnAddToFavorites)
         rvFavorites.layoutManager = LinearLayoutManager(requireContext())
 
-        val dao = WeatherDatabase.getDatabase(requireContext()).weatherDao()
+        val dao = WeatherDatabase.Companion.getDatabase(requireContext()).weatherDao()
         val repo = FavoriteCityRepositry(LocalFavorityCityDatasource(dao))
          viewModel = FavoriteCityViewModel(repo)
 
         lifecycleScope.launch {
             val favList = viewModel.getAllFavCity()
-            adapter = FavCityAdapter(viewModel.Fav_city_ret,this@ShowFavoriteFragment)
+            adapter = FavCityAdapter(viewModel.Fav_city_ret, this@ShowFavoriteFragment)
             rvFavorites.adapter = adapter
 
         }
-         var fragmentManager = requireActivity().getSupportFragmentManager()
-        var transaction = fragmentManager.beginTransaction()
         btn_add_favorite.setOnClickListener {
-            (activity as? FavoriteActivity)?.openMapPicker()
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, SelectFavoriteLocationFragment())
-                .addToBackStack(null)
-                .commit()
+            val activity = requireActivity() as INavFragmaent
+
+            activity.navigateTo(SelectFavoriteLocationFragment(),false)
+//                    childFragmentManager.beginTransaction()
+//            .replace(R.id.fragment_container, SelectFavoriteLocationFragment())
+//            .addToBackStack(null)
+//            .commit()
+
+
+//            requireActivity().supportFragmentManager
+//                .beginTransaction()
+//                .replace(R.id.fragment_container, SelectFavoriteLocationFragment())
+//                .addToBackStack(null)
+//                .commit()
         }
     }
 

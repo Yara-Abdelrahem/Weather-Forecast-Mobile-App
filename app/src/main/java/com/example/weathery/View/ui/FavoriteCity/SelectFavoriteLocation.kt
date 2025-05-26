@@ -1,7 +1,6 @@
-package com.example.weathery.View
+package com.example.weathery.View.ui.FavoriteCity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -9,26 +8,26 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.weathery.R
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import org.osmdroid.config.*
+import com.example.weathery.Model.FavoriteCity
+import com.example.weathery.Model.FavoriteCityRepositry
+import com.example.weathery.Model.LocalFavorityCityDatasource
+import com.example.weathery.View.FavoriteActivity
+import com.example.weathery.View.INavFragmaent
+import com.example.weathery.ViewModel.FavoriteCityViewModel
+import com.example.weathery.WeatherDatabase
+import kotlinx.coroutines.launch
 
 class SelectFavoriteLocationFragment : Fragment() {
 
@@ -37,6 +36,8 @@ class SelectFavoriteLocationFragment : Fragment() {
     private var selectedGeoPoint: GeoPoint? = null
     private var selectedCityName: String = "Unknown"
     private lateinit var geoPoint : GeoPoint
+    lateinit var favcity_viewmodel :FavoriteCityViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +48,13 @@ class SelectFavoriteLocationFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var favcitudao = WeatherDatabase.getDatabase(requireContext()).weatherDao()
+
+        favcity_viewmodel = FavoriteCityViewModel(
+            FavoriteCityRepositry(
+                LocalFavorityCityDatasource(favcitudao)
+            )
+        )
 
         Configuration.getInstance().load(
             requireContext(),
@@ -65,7 +73,6 @@ class SelectFavoriteLocationFragment : Fragment() {
                 val projection = mapView.projection
                 val geoPoint = projection.fromPixels(event.x.toInt(), event.y.toInt()) as GeoPoint
                 selectedGeoPoint = geoPoint
-
                 // Add marker
                 val marker = Marker(mapView)
                 marker.position = geoPoint
@@ -82,17 +89,22 @@ class SelectFavoriteLocationFragment : Fragment() {
             }
         }
         btnSelectLocation.setOnClickListener {
-
             selectedGeoPoint?.let { geoPoint ->
                 Log.i("Locationnnnn", "$selectedCityName ----- ${geoPoint.latitude}----${geoPoint.longitude}")
-                (activity as? FavoriteActivity)?.onLocationPicked(geoPoint.latitude ,geoPoint.longitude , selectedCityName)
-                parentFragmentManager.popBackStack()
+                lifecycleScope.launch {
+                    favcity_viewmodel.insertFavCity(
+                        FavoriteCity(city_name = selectedCityName, city_lat = geoPoint.latitude, city_lon = geoPoint.longitude)
+                    )
+                }
+                val activity = requireActivity() as INavFragmaent
+
+                activity.navigateTo(ShowFavoriteFragment(),false)
 
             } ?: run {
                 Toast.makeText(requireContext(), "Please select a location on the map.", Toast.LENGTH_SHORT).show()
             }
-
         }
+
     }
 
     private fun getCityName(lat: Double, lon: Double) {

@@ -1,10 +1,12 @@
-package com.example.yourapp.view
+package com.example.weathery.View.ui.Alerts
 
 import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +17,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.weathery.Model.AlertItem
 import com.example.weathery.R
+import com.example.weathery.View.INavFragmaent
+import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
 import com.example.yourapp.viewmodel.AlarmViewModel
 import java.util.Calendar
-import java.util.Random
 
 class SelectTimeFragment : Fragment() {
     private lateinit var btnSetAlert: Button
@@ -39,10 +42,10 @@ class SelectTimeFragment : Fragment() {
         timePicker.setIs24HourView(true)
 
         btnSetAlert.setOnClickListener {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 if (!alarmManager.canScheduleExactAlarms()) {
-                    val intent = Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                     startActivity(intent)
                     Toast.makeText(requireContext(), "Please allow exact alarms", Toast.LENGTH_LONG).show()
                     return@setOnClickListener
@@ -62,7 +65,10 @@ class SelectTimeFragment : Fragment() {
             val alarmData = AlertItem(time = calendar.timeInMillis, msg = "Wake up!")
             alarmViewModel.setAlarm(alarmData)
             Toast.makeText(requireContext(), "Alarm set for $hour:$minute", Toast.LENGTH_SHORT).show()
-            parentFragmentManager.popBackStack()
+
+            val activity = requireActivity() as INavFragmaent
+
+            activity.navigateTo(ShowAlertFragment(),false)
         }
     }
 }
