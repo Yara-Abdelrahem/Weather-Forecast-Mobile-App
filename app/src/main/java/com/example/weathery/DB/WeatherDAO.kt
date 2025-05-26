@@ -13,6 +13,9 @@ interface WeatherDao {
     @Query("SELECT * FROM forecast_items")
     suspend fun getAllForecasts(): List<ForecastItemEntity>
 
+    @Query("SELECT * FROM forecast_items WHERE cityName = :name")
+    suspend fun getForecastsWithName(name: String): List<ForecastItemEntity>
+
     @Query("DELETE FROM forecast_items")
     suspend fun clearAll()
 

@@ -6,41 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathery.R
-
+import com.example.yourapp.view.SelectTimeFragment
+import com.example.yourapp.viewmodel.AlarmViewModel
 
 class ShowAlertFragment : Fragment() {
-
-    private lateinit var btn_add_alert: Button
-    private lateinit var rv_alerts : RecyclerView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_show_alert, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_add_alert = view.findViewById(R.id.btn_add_new_alert)
 
-        btn_add_alert.setOnClickListener {
-            (activity as? AlertActivity)?.select_Alert()
+        val fab = view.findViewById<Button>(R.id.fab)
+        fab.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_alert_container, SelectTimeFragment())
+                .replace(R.id.frameLayoutAlarm, SelectTimeFragment())
                 .addToBackStack(null)
                 .commit()
         }
-
     }
-
 }
+

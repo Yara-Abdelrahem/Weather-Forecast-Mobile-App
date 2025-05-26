@@ -43,6 +43,12 @@ android {
 
 dependencies {
     implementation(libs.androidx.swiperefreshlayout)
+    // Lifecycle components
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.9.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0")
+
+    // Optional: For Kotlin coroutines support
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.9.0")
     implementation ("com.android.volley:volley:1.2.1")
     implementation ("org.osmdroid:osmdroid-android:6.1.10")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
@@ -53,6 +59,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.fragment.ktx)
     kapt("androidx.room:room-compiler:2.6.1")
     implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.1")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.8.22")
