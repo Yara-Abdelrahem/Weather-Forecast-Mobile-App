@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 1) your gradient colors -->
+    <gradient
+        android:startColor="#FFB74D"
+        android:endColor="#FFA726"
+        android:angle="90"/>
+
+    <!-- 2) round the corners to match CardView radius -->
+    <corners
+        android:radius="16dp"/>
+
+    <!-- 3) optional padding so content isn’t flush to edges -->
+    <padding
+        android:left="8dp"
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp"/>
+
+</shape>
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<gradient xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:angle="45"-->
+    <!--    android:startColor="#8E2DE2"-->
+    <!--    android:endColor="#4A00E0"-->
+    <!--    android:type="linear" />-->

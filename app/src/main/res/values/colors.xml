@@ -6,4 +6,6 @@
     <color name="weather_bg">#2196F3</color>
     <color name="weather_nav_bg">#1976D2</color>
     <color name="weather_card_bg">#42A5F5</color>
+    <color name="gradientBackground">#8E2DE2</color>
+
 </resources>

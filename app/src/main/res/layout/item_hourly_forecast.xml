@@ -3,29 +3,32 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:gravity="center">
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/timeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5 AM"
-        android:textColor="#D3D3D3"
-        android:textSize="12sp" />
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal" />
 
     <ImageView
         android:id="@+id/weatherIcon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="4dp" />
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/tempText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="13°C"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_marginTop="4dp" />
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/descriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

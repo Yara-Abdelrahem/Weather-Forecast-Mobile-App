@@ -20,6 +20,7 @@ class LocationHelper(private val activity: AppCompatActivity) {
     private var locationCallback: LocationCallback? = null
     private var pendingLocationCallback: ((Double, Double) -> Unit)? = null
 
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     @MainThread
     fun requestLocation(onResult: (lat: Double, lon: Double) -> Unit) {
         if (hasLocationPermissions()) {
