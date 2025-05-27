@@ -103,7 +103,7 @@ class DailyForecastAdapter : ListAdapter<ForecastItemEntity, DailyForecastAdapte
         }
 
         private fun loadWeatherIcon(imageView: ImageView, iconCode: String) {
-            val url = "[invalid url, do not cite]"
+            val url = "https://openweathermap.org/img/wn/${iconCode}@2x.png"
             Glide.with(imageView.context).load(url).into(imageView)
         }
     }
