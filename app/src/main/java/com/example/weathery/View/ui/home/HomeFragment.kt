@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.example.weathery.ForecastAdapter
 import com.example.weathery.View.Adapter.DailyForecastAdapter
 import com.example.weathery.HourlyForecastAdapter
-import com.example.weathery.View.INavFragmaent
 import com.example.weathery.ViewModel.WeatherViewModel
 import com.example.weathery.WeatherDatabase
 import com.example.weathery.WeatherRepository
@@ -57,7 +56,10 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(allOf = [
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ])
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerViews()
@@ -67,32 +69,33 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerViews() {
         binding.hourlyForecastRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL, false)
             adapter = hourlyAdapter
+            isNestedScrollingEnabled = false
         }
         binding.dailyForecastRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext())  // vertical now
             adapter = dailyAdapter
-        }
-        binding.forecastRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = forecastAdapter
+            isNestedScrollingEnabled = false
         }
     }
 
     private fun setupObservers() {
-        // Current weather + header
         viewModel.weatherResponse.observe(viewLifecycleOwner) { response ->
             binding.progressBar.isVisible = false
             response?.let {
                 binding.weatherInfo.isVisible = true
                 binding.locationText.text = it.city.name
                 binding.dateText.text = getCurrentFormattedDate()
-                // Description and temp from first forecast
-                binding.weatherDescription.text = it.weatherList.firstOrNull()?.weather?.firstOrNull()?.description ?: "N/A"
-                binding.currentTemperature.text = "${it.weatherList.firstOrNull()?.main?.temp?.toInt() ?: 0}°C"
-                // Load icon
-                it.weatherList.firstOrNull()?.weather?.firstOrNull()?.icon?.let { code ->
+
+                // header/current-weather
+                val first = it.weatherList.firstOrNull()
+                binding.weatherDescription.text =
+                    first?.weather?.firstOrNull()?.description ?: "N/A"
+                binding.currentTemperature.text =
+                    "${first?.main?.temp?.toInt() ?: 0}°C"
+                first?.weather?.firstOrNull()?.icon?.let { code ->
                     val url = "https://openweathermap.org/img/wn/${code}@2x.png"
                     Glide.with(this)
                         .load(url)
@@ -101,33 +104,28 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Hourly today
         viewModel.hourlyForecasts.observe(viewLifecycleOwner) { hourly ->
             hourlyAdapter.submitList(hourly)
-            // detailed info from first hour
             if (hourly.isNotEmpty()) {
                 binding.detailedWeatherInfo.isVisible = true
-                val first = hourly[0]
-                binding.pressureText.text = "Pressure: ${first.pressure} hPa"
-                binding.humidityText.text = "Humidity: ${first.humidity}%"
-                binding.windText.text = "Wind: ${first.windSpeed} m/s"
-                binding.cloudText.text = "Clouds: ${first.cloud}%"
-                binding.uvIndexText.text = "UV Index: ${ "N/A"}"
-                binding.visibilityText.text = "Visibility: ${first.visibility} m"
+                val f = hourly[0]
+                binding.pressureText.text = "Pressure: ${f.pressure} hPa"
+                binding.humidityText.text = "Humidity: ${f.humidity}%"
+                binding.windText.text = "Wind: ${f.windSpeed} m/s"
+                binding.cloudText.text = "Clouds: ${f.cloud}%"
+                binding.uvIndexText.isVisible = false
+                binding.visibilityText.text = "Visibility: ${f.visibility} m"
             }
         }
 
-        // Daily summaries
         viewModel.dailySummaries.observe(viewLifecycleOwner) { daily ->
             dailyAdapter.submitList(daily)
         }
 
-        // Full list (optional)
         viewModel.forecasts.observe(viewLifecycleOwner) { all ->
             forecastAdapter.submitList(all)
         }
 
-        // Errors
         viewModel.error.observe(viewLifecycleOwner) { error ->
             binding.progressBar.isVisible = false
             binding.errorText.isVisible = error != null
@@ -138,7 +136,10 @@ class HomeFragment : Fragment() {
     private fun getCurrentFormattedDate(): String =
         SimpleDateFormat("EEE, dd MMM", Locale.getDefault()).format(Date())
 
-    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(allOf = [
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ])
     private fun requestLocation() {
         val apiKey = "9a3fd0649e44a6fb8826038be3aa48fc"
         locHelper = LocationHelper(requireActivity() as AppCompatActivity)
@@ -152,6 +153,161 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 }
+
+//package com.example.weathery.View.ui.home
+//
+//import android.Manifest
+//import android.os.Bundle
+//import android.view.LayoutInflater
+//import android.view.View
+//import android.view.ViewGroup
+//import androidx.annotation.RequiresPermission
+//import androidx.appcompat.app.AppCompatActivity
+//import androidx.core.view.isVisible
+//import androidx.fragment.app.Fragment
+//import androidx.fragment.app.viewModels
+//import androidx.lifecycle.ViewModel
+//import androidx.lifecycle.ViewModelProvider
+//import androidx.recyclerview.widget.LinearLayoutManager
+//import com.bumptech.glide.Glide
+//import com.example.weathery.ForecastAdapter
+//import com.example.weathery.View.Adapter.DailyForecastAdapter
+//import com.example.weathery.HourlyForecastAdapter
+//import com.example.weathery.View.INavFragmaent
+//import com.example.weathery.ViewModel.WeatherViewModel
+//import com.example.weathery.WeatherDatabase
+//import com.example.weathery.WeatherRepository
+//import com.example.weathery.databinding.FragmentHomeBinding
+//import com.example.weathery.work.LocationHelper
+//import java.text.SimpleDateFormat
+//import java.util.Date
+//import java.util.Locale
+//
+//class HomeFragment : Fragment() {
+//
+//    private var _binding: FragmentHomeBinding? = null
+//    private val binding get() = _binding!!
+//
+//    private lateinit var locHelper: LocationHelper
+//    private val viewModel: WeatherViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//                val database = WeatherDatabase.getDatabase(requireContext())
+//                val dao = database.weatherDao()
+//                @Suppress("UNCHECKED_CAST")
+//                return WeatherViewModel(WeatherRepository.create(dao)) as T
+//            }
+//        }
+//    }
+//
+//    private val hourlyAdapter = HourlyForecastAdapter()
+//    private val dailyAdapter = DailyForecastAdapter()
+//    private val forecastAdapter = ForecastAdapter()
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+//        return binding.root
+//    }
+//
+//    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        setupRecyclerViews()
+//        setupObservers()
+//        requestLocation()
+//    }
+//
+//    private fun setupRecyclerViews() {
+//        binding.hourlyForecastRecyclerView.apply {
+//            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//            adapter = hourlyAdapter
+//        }
+//        binding.dailyForecastRecyclerView.apply {
+//            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//            adapter = dailyAdapter
+//        }
+//        binding.forecastRecyclerView.apply {
+//            layoutManager = LinearLayoutManager(requireContext())
+//            adapter = forecastAdapter
+//        }
+//    }
+//
+//    private fun setupObservers() {
+//        // Current weather + header
+//        viewModel.weatherResponse.observe(viewLifecycleOwner) { response ->
+//            binding.progressBar.isVisible = false
+//            response?.let {
+//                binding.weatherInfo.isVisible = true
+//                binding.locationText.text = it.city.name
+//                binding.dateText.text = getCurrentFormattedDate()
+//                // Description and temp from first forecast
+//                binding.weatherDescription.text = it.weatherList.firstOrNull()?.weather?.firstOrNull()?.description ?: "N/A"
+//                binding.currentTemperature.text = "${it.weatherList.firstOrNull()?.main?.temp?.toInt() ?: 0}°C"
+//                // Load icon
+//                it.weatherList.firstOrNull()?.weather?.firstOrNull()?.icon?.let { code ->
+//                    val url = "https://openweathermap.org/img/wn/${code}@2x.png"
+//                    Glide.with(this)
+//                        .load(url)
+//                        .into(binding.weatherIcon)
+//                }
+//            }
+//        }
+//
+//        // Hourly today
+//        viewModel.hourlyForecasts.observe(viewLifecycleOwner) { hourly ->
+//            hourlyAdapter.submitList(hourly)
+//            // detailed info from first hour
+//            if (hourly.isNotEmpty()) {
+//                binding.detailedWeatherInfo.isVisible = true
+//                val first = hourly[0]
+//                binding.pressureText.text = "Pressure: ${first.pressure} hPa"
+//                binding.humidityText.text = "Humidity: ${first.humidity}%"
+//                binding.windText.text = "Wind: ${first.windSpeed} m/s"
+//                binding.cloudText.text = "Clouds: ${first.cloud}%"
+//                binding.uvIndexText.text = "UV Index: ${ "N/A"}"
+//                binding.visibilityText.text = "Visibility: ${first.visibility} m"
+//            }
+//        }
+//
+//        // Daily summaries
+//        viewModel.dailySummaries.observe(viewLifecycleOwner) { daily ->
+//            dailyAdapter.submitList(daily)
+//        }
+//
+//        // Full list (optional)
+//        viewModel.forecasts.observe(viewLifecycleOwner) { all ->
+//            forecastAdapter.submitList(all)
+//        }
+//
+//        // Errors
+//        viewModel.error.observe(viewLifecycleOwner) { error ->
+//            binding.progressBar.isVisible = false
+//            binding.errorText.isVisible = error != null
+//            binding.errorText.text = error
+//        }
+//    }
+//
+//    private fun getCurrentFormattedDate(): String =
+//        SimpleDateFormat("EEE, dd MMM", Locale.getDefault()).format(Date())
+//
+//    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+//    private fun requestLocation() {
+//        val apiKey = "9a3fd0649e44a6fb8826038be3aa48fc"
+//        locHelper = LocationHelper(requireActivity() as AppCompatActivity)
+//        locHelper.requestLocation { lat, lon ->
+//            viewModel.loadForecasts(lat, lon, apiKey)
+//        }
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
+//}
 
 
 
