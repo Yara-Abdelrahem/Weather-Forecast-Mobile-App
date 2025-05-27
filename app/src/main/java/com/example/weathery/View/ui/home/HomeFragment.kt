@@ -62,8 +62,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() {
-        binding.forecastRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.forecastRecyclerView.adapter = forecastAdapter
+//        binding.forecastRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+//        binding.forecastRecyclerView.adapter = forecastAdapter
 
         binding.hourlyForecastRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -89,7 +89,7 @@ class HomeFragment : Fragment() {
 
         viewModel.forecasts.observe(viewLifecycleOwner) { forecasts ->
             binding.progressBar.isVisible = false
-            binding.weatherInfo.isVisible = true
+//            binding.detailedWeatherInfo.isVisible = true
             forecastAdapter.submitList(forecasts)
             hourlyAdapter.submitList(forecasts.take(5))
             dailyAdapter.submitList(forecasts)
@@ -99,7 +99,7 @@ class HomeFragment : Fragment() {
             binding.progressBar.isVisible = false
             if (error != null) {
                 binding.errorText.isVisible = true
-                binding.weatherInfo.isVisible = false
+//                binding.detailedWeatherInfo.isVisible = false
                 binding.errorText.text = error
             } else {
                 binding.errorText.isVisible = false

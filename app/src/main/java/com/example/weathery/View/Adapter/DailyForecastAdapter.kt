@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,47 +17,45 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class DailyForecastAdapter
-    : ListAdapter<ForecastItemEntity, DailyForecastAdapter.DailyForecastViewHolder>(DailyForecastDiffCallback()) {
+class DailyForecastAdapter : ListAdapter<ForecastItemEntity, DailyForecastAdapter.DailyForecastViewHolder>(DailyForecastDiffCallback()) {
 
     class DailyForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dayText: TextView = itemView.findViewById(R.id.dayText)
         private val tempRangeText: TextView = itemView.findViewById(R.id.tempRangeText)
         private val weatherIcon: ImageView = itemView.findViewById(R.id.weatherIcon)
         private val descriptionText: TextView = itemView.findViewById(R.id.descriptionText)
+//        private val cardView: CardView = itemView.findViewById(R.id.currentWeatherCard)  // Assuming this ID exists
 
-        fun bind(forecast: ForecastItemEntity) {
-            // Day of week
+        fun bind(forecast: ForecastItemEntity, position: Int) {
             val date = Date(forecast.dateTime * 1_000)
             val sdf = SimpleDateFormat("EEE", Locale.getDefault())
-            dayText.text = sdf.format(date)
 
-            // Min / Max temp
+            if (position == 0) {
+                dayText.text = "Tomorrow"
+//                cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.gradient_start))
+            } else {
+                dayText.text = sdf.format(date)
+//                cardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.dark_gray))
+            }
+
             tempRangeText.text = "${forecast.tempMin}°C / ${forecast.tempMax}°C"
-
-            // Icon & description
             loadWeatherIcon(weatherIcon, forecast.icon)
             descriptionText.text = forecast.description
         }
 
         private fun loadWeatherIcon(imageView: ImageView, iconCode: String) {
-            val url = "https://openweathermap.org/img/wn/${iconCode}@2x.png"
-            Glide.with(imageView.context)
-                .load(url)
-                .placeholder(R.drawable.ic_launcher_foreground) // optional placeholder
-                .error(R.drawable.ic_launcher_background)             // optional error drawable
-                .into(imageView)
+            val url = "[invalid url, do not cite]"
+            Glide.with(imageView.context).load(url).into(imageView)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyForecastViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_daily_forecast, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_daily_forecast, parent, false)
         return DailyForecastViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: DailyForecastViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 }
 

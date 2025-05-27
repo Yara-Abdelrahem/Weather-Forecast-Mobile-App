@@ -88,6 +88,7 @@ class SelectFavoriteLocationFragment : Fragment() {
                 false
             }
         }
+
         btnSelectLocation.setOnClickListener {
             selectedGeoPoint?.let { geoPoint ->
                 Log.i("Locationnnnn", "$selectedCityName ----- ${geoPoint.latitude}----${geoPoint.longitude}")
