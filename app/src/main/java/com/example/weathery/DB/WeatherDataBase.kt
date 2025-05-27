@@ -1,3 +1,32 @@
+//package com.example.weathery
+//
+//import androidx.room.Database
+//import androidx.room.RoomDatabase
+//
+//@Database(entities = [CurrentWeatherEntity::class, HourlyForecastEntity::class, DailyForecastEntity::class], version = 1)
+//abstract class WeatherDatabase : RoomDatabase() {
+//    abstract fun currentWeatherDao(): CurrentWeatherDao
+//    abstract fun hourlyForecastDao(): HourlyForecastDao
+//    abstract fun dailyForecastDao(): DailyForecastDao
+//
+//    companion object {
+//        @Volatile
+//        private var INSTANCE: WeatherDatabase? = null
+//
+//        fun getDatabase(context: android.content.Context): WeatherDatabase {
+//            return INSTANCE ?: synchronized(this) {
+//                val instance = androidx.room.Room.databaseBuilder(
+//                    context.applicationContext,
+//                    WeatherDatabase::class.java,
+//                    "weather_database"
+//                ).build()
+//                INSTANCE = instance
+//                instance
+//            }
+//        }
+//    }
+//}
+
 package com.example.weathery
 
 import android.content.Context

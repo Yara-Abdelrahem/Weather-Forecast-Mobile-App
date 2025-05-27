@@ -4,6 +4,44 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.OnConflictStrategy
+import com.example.weathery.CurrentWeatherEntity
+import com.example.weathery.DailyForecastEntity
+import com.example.weathery.HourlyForecastEntity
+
+//@Dao
+//interface CurrentWeatherDao {
+//    @Query("SELECT * FROM current_weather WHERE id = 1")
+//    fun getCurrentWeather(): LiveData<CurrentWeatherEntity>
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertCurrentWeather(weather: CurrentWeatherEntity)
+//}
+//
+//@Dao
+//interface HourlyForecastDao {
+//    @Query("SELECT * FROM hourly_forecasts ORDER BY dateTime ASC")
+//    fun getAllHourlyForecasts(): LiveData<List<HourlyForecastEntity>>
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertHourlyForecasts(forecasts: List<HourlyForecastEntity>)
+//
+//    @Query("DELETE FROM hourly_forecasts")
+//    suspend fun deleteAllHourlyForecasts()
+//}
+//
+//@Dao
+//interface DailyForecastDao {
+//    @Query("SELECT * FROM daily_forecasts ORDER BY dateTime ASC")
+//    fun getAllDailyForecasts(): LiveData<List<DailyForecastEntity>>
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertDailyForecasts(forecasts: List<DailyForecastEntity>)
+//
+//    @Query("DELETE FROM daily_forecasts")
+//    suspend fun deleteAllDailyForecasts()
+//}
 
 @Dao
 interface WeatherDao {

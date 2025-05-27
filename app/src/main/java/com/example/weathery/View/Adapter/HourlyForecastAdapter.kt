@@ -1,4 +1,49 @@
+//package com.example.weathery
+//
+//import android.view.LayoutInflater
+//import android.view.ViewGroup
+//import androidx.recyclerview.widget.DiffUtil
+//import androidx.recyclerview.widget.ListAdapter
+//import androidx.recyclerview.widget.RecyclerView
+//import com.example.weathery.databinding.ItemHourlyForecastBinding
+//import java.text.SimpleDateFormat
+//import java.util.*
+//
+//class HourlyForecastAdapter : ListAdapter<HourlyForecastEntity, HourlyForecastAdapter.HourlyViewHolder>(HourlyDiffCallback()) {
+//
+//    class HourlyViewHolder(private val binding: ItemHourlyForecastBinding) : RecyclerView.ViewHolder(binding.root) {
+//        fun bind(forecast: HourlyForecastEntity) {
+//            val date = Date(forecast.dateTime * 1000)
+//            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+//            binding.timeText.text = sdf.format(date)
+//            binding.tempText.text = String.format("%.1f°C", forecast.temperature)
+//            binding.descriptionText.text = forecast.description
+//            // Load weather icon (e.g., using Glide)
+//            // Glide.with(binding.weatherIcon.context).load("https://openweathermap.org/img/wn/${forecast.icon}@2x.png").into(binding.weatherIcon)
+//        }
+//    }
+//
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourlyViewHolder {
+//        val binding = ItemHourlyForecastBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//        return HourlyViewHolder(binding)
+//    }
+//
+//    override fun onBindViewHolder(holder: HourlyViewHolder, position: Int) {
+//        holder.bind(getItem(position))
+//    }
+//}
+//
+//class HourlyDiffCallback : DiffUtil.ItemCallback<HourlyForecastEntity>() {
+//    override fun areItemsTheSame(oldItem: HourlyForecastEntity, newItem: HourlyForecastEntity): Boolean {
+//        return oldItem.id == newItem.id
+//    }
+//
+//    override fun areContentsTheSame(oldItem: HourlyForecastEntity, newItem: HourlyForecastEntity): Boolean {
+//        return oldItem == newItem
+//    }
+//}
 
+//
 package com.example.weathery
 
 import android.view.LayoutInflater
@@ -50,8 +95,6 @@ class HourlyForecastAdapter : ListAdapter<ForecastItemEntity, HourlyForecastAdap
     override fun onBindViewHolder(holder: HourlyForecastViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
-
 }
 
 class HourlyForecastDiffCallback : DiffUtil.ItemCallback<ForecastItemEntity>() {

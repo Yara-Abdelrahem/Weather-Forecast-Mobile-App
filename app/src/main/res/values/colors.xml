@@ -9,4 +9,6 @@
     <color name="gradientBackground">#8E2DE2</color>
     <color name="gradient_start">#6600CC</color>
     <color name="dark_gray">#333333</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
 </resources>
