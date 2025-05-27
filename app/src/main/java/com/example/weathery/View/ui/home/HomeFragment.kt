@@ -62,20 +62,28 @@ class HomeFragment : Fragment() {
     ])
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
         setupRecyclerViews()
         setupObservers()
         requestLocation()
     }
 
+    private fun setupToolbar() {
+        binding.toolbar.title = "Home"
+        binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_menu_overflow_material) // Use a menu icon
+        binding.toolbar.setNavigationOnClickListener {
+            // Handle navigation drawer opening here if needed
+        }
+    }
+
     private fun setupRecyclerViews() {
         binding.hourlyForecastRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = hourlyAdapter
             isNestedScrollingEnabled = false
         }
         binding.dailyForecastRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())  // vertical now
+            layoutManager = LinearLayoutManager(requireContext()) // Vertical
             adapter = dailyAdapter
             isNestedScrollingEnabled = false
         }
@@ -85,21 +93,23 @@ class HomeFragment : Fragment() {
         viewModel.weatherResponse.observe(viewLifecycleOwner) { response ->
             binding.progressBar.isVisible = false
             response?.let {
-                binding.weatherInfo.isVisible = true
                 binding.locationText.text = it.city.name
                 binding.dateText.text = getCurrentFormattedDate()
 
-                // header/current-weather
                 val first = it.weatherList.firstOrNull()
-                binding.weatherDescription.text =
-                    first?.weather?.firstOrNull()?.description ?: "N/A"
-                binding.currentTemperature.text =
-                    "${first?.main?.temp?.toInt() ?: 0}°C"
+                binding.weatherDescription.text = first?.weather?.firstOrNull()?.description ?: "N/A"
+                binding.currentTemperature.text = "${first?.main?.temp?.toInt() ?: 0}°C"
                 first?.weather?.firstOrNull()?.icon?.let { code ->
                     val url = "https://openweathermap.org/img/wn/${code}@2x.png"
-                    Glide.with(this)
-                        .load(url)
-                        .into(binding.weatherIcon)
+                    Glide.with(this).load(url).into(binding.weatherIcon)
+                    // Show stars for clear sky at night
+//                    if (code == "01n") {
+//                        binding.starLeft.isVisible = true
+//                        binding.starRight.isVisible = true
+//                    } else {
+//                        binding.starLeft.isVisible = false
+//                        binding.starRight.isVisible = false
+//                    }
                 }
             }
         }
@@ -109,12 +119,12 @@ class HomeFragment : Fragment() {
             if (hourly.isNotEmpty()) {
                 binding.detailedWeatherInfo.isVisible = true
                 val f = hourly[0]
-                binding.pressureText.text = "Pressure: ${f.pressure} hPa"
-                binding.humidityText.text = "Humidity: ${f.humidity}%"
-                binding.windText.text = "Wind: ${f.windSpeed} m/s"
-                binding.cloudText.text = "Clouds: ${f.cloud}%"
-                binding.uvIndexText.isVisible = false
-                binding.visibilityText.text = "Visibility: ${f.visibility} m"
+                binding.pressureText.text = "${f.pressure} hPa"
+                binding.humidityText.text = "${f.humidity}%"
+                binding.windText.text = "${f.windSpeed} m/s"
+                //binding.cloudText.text = "${f.cloud}%"
+                // UV index not shown unless data is available
+                //binding.visibilityText.text = "${f.visibility} m"
             }
         }
 
