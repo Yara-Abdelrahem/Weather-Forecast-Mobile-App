@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +26,8 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var locHelper: LocationHelper
+    lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+
     private val viewModel: WeatherViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -49,7 +53,14 @@ class MainActivity : AppCompatActivity() {
         setupObservers()
         // Replace with your API key
         val apiKey = "9a3fd0649e44a6fb8826038be3aa48fc"
-        locHelper = LocationHelper(this)
+        permissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { perms ->
+            // The callback is handled by LocationHelper, but we can log for debugging
+            val granted = perms.all { it.value }
+            Log.d("HomeActivity", "Permissions granted: $granted")
+        }
+        locHelper = LocationHelper(this, permissionLauncher)
 
         locHelper.requestLocation { lat, lon ->
             viewModel.loadForecasts(lat, lon, apiKey)
