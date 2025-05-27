@@ -80,12 +80,11 @@ class HomeFragment : Fragment() {
         binding.hourlyForecastRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = hourlyAdapter
-            isNestedScrollingEnabled = false
         }
         binding.dailyForecastRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext()) // Vertical
             adapter = dailyAdapter
-            isNestedScrollingEnabled = false
+            isNestedScrollingEnabled = true
         }
     }
 
@@ -102,14 +101,7 @@ class HomeFragment : Fragment() {
                 first?.weather?.firstOrNull()?.icon?.let { code ->
                     val url = "https://openweathermap.org/img/wn/${code}@2x.png"
                     Glide.with(this).load(url).into(binding.weatherIcon)
-                    // Show stars for clear sky at night
-//                    if (code == "01n") {
-//                        binding.starLeft.isVisible = true
-//                        binding.starRight.isVisible = true
-//                    } else {
-//                        binding.starLeft.isVisible = false
-//                        binding.starRight.isVisible = false
-//                    }
+
                 }
             }
         }

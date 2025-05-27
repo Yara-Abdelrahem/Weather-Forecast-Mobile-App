@@ -58,6 +58,13 @@ class AlarmService : Service() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        // Stop action intent
+        val stopIntent = Intent(this, AlarmReceiver::class.java)
+        val stopPendingIntent = PendingIntent.getBroadcast(
+            this, 1, stopIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notification = NotificationCompat.Builder(this, channelId)
             .setContentTitle("Weather Alert")
             .setContentText(message)
@@ -67,11 +74,11 @@ class AlarmService : Service() {
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setFullScreenIntent(fullScreenPendingIntent, true)
             .setAutoCancel(true)
+            .addAction(R.drawable.ic_stop, "Stop", stopPendingIntent) // ✅ Action button
             .build()
 
         startForeground(1, notification)
     }
-
 
     override fun onBind(intent: Intent?): IBinder? = null
 }

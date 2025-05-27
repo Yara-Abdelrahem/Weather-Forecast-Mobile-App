@@ -19,7 +19,7 @@ import com.example.weathery.Model.AlertItem
 import com.example.weathery.R
 import com.example.weathery.View.INavFragmaent
 import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
-import com.example.yourapp.viewmodel.AlarmViewModel
+import com.example.weathery.ViewModel.AlarmViewModel
 import java.util.Calendar
 
 class SelectTimeFragment : Fragment() {
