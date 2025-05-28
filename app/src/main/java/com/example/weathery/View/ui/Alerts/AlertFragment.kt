@@ -23,6 +23,7 @@ class AlertFragment : Fragment() {
     private var _binding: FragmentAlertBinding? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var alertViewModel: AlarmViewModel
+    private lateinit var adapter: AlertAdapter
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -32,8 +33,7 @@ class AlertFragment : Fragment() {
     ): View {
         alertViewModel = AlarmViewModel(requireContext())
         _binding = FragmentAlertBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,21 +43,21 @@ class AlertFragment : Fragment() {
         val fab = view.findViewById<Button>(R.id.fab)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val alerts = mutableListOf<AlertItem>()
-        val adapter = AlertAdapter(alerts, alertViewModel, lifecycleScope)
+        adapter = AlertAdapter(mutableListOf(), alertViewModel, lifecycleScope)
         recyclerView.adapter = adapter
 
-        // Observe LiveData for real-time updates
-        lifecycleScope.launch {
-            var alertsList =alertViewModel.getAllAlerts()
-            alerts.clear()
-            alerts.addAll(alertsList)
-            adapter.notifyDataSetChanged()
-        }
+        loadAlerts()
 
         fab.setOnClickListener {
             val activity = requireActivity() as INavFragmaent
             activity.navigateTo(SelectTimeFragment(), false)
+        }
+    }
+
+    private fun loadAlerts() {
+        lifecycleScope.launch {
+            val alertsList = alertViewModel.getAllAlerts()
+            adapter.setAlerts(alertsList.toMutableList())
         }
     }
 

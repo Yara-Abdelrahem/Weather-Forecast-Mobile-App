@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.example.weathery.AlarmAlert.Model.AlertItem
 import com.example.weathery.Favorite.Model.FavoriteCity
 import com.example.weathery.Home.Model.ForecastItemEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WeatherDao {
@@ -54,11 +55,21 @@ interface WeatherDao {
 
     //--------------------------------------------------------------
 
+
+
     @Insert
     suspend fun insertAlert(alert: AlertItem): Long
 
     @Query("SELECT * FROM AlertTable")
+    fun getAllAlertsFlow(): Flow<List<AlertItem>>
+
+
+    @Query("SELECT * FROM AlertTable")
     suspend fun getAllAlerts(): List<AlertItem>
+
+    @Query("SELECT * FROM AlertTable WHERE id = :id LIMIT 1")
+    suspend fun getAlertById(id: Int): AlertItem?
+
 
     @Delete
     suspend fun deleteAlert(alertItem: AlertItem)

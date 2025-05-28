@@ -15,14 +15,19 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.weathery.AlarmAlert.AlarmActivity
 import com.example.weathery.View.AlarmAlertActivity
+import com.example.weathery.WeatherDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AlarmReceiver : BroadcastReceiver() {
     private var mediaPlayer: MediaPlayer? = null
 
     override fun onReceive(context: Context, intent: Intent) {
-        val msg = intent.getStringExtra("message") ?: "Alert!"
+        val msg = intent.getStringExtra("message") ?: "Check Weather Now!"
         val type = intent.getStringExtra("type") ?: "notification"
         val id = intent.getIntExtra("id", 0)
+        Log.d("AlarmReceiver", "Received intent with message: $msg, type: $type, id: $id")
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "weather_channel"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -34,6 +39,7 @@ class AlarmReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
         if (type == "alarm") {
+            //alarm
                 val alarmIntent = Intent(context, AlarmActivity::class.java).apply {
                     putExtra("message", msg)
                     putExtra("id", id)
@@ -41,28 +47,8 @@ class AlarmReceiver : BroadcastReceiver() {
                 }
                 context.startActivity(alarmIntent)
 
-
-//            val dismissIntent = Intent(context, AlarmDismissReceiver::class.java).apply {
-//                putExtra("id", id)
-//            }
-//            val dismissPendingIntent = PendingIntent.getBroadcast(
-//                context,
-//                id,
-//                dismissIntent,
-//                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-//            )
-//
-//            val notification = NotificationCompat.Builder(context, channelId)
-//                .setSmallIcon(R.drawable.notification1)
-//                .setContentTitle("Weather alarm")
-//                .setContentText(msg)
-//                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                .setAutoCancel(false)
-//                .addAction(R.drawable.notification1, "Dismiss", dismissPendingIntent)
-//                .build()
-//
-//            notificationManager.notify(id, notification)
-        } else { // notification
+        } else {
+            // notification
             val notification = NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.notification1)
                 .setContentTitle("Weather Alert")
@@ -72,12 +58,10 @@ class AlarmReceiver : BroadcastReceiver() {
                 .build()
             notificationManager.notify(id, notification)
         }
-    }
 
-
-    fun stopAlarm() {
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
-        mediaPlayer = null
+        CoroutineScope(Dispatchers.IO).launch {
+            val db = WeatherDatabase.getDatabase(context)
+            db.weatherDao().deleteAlertById(id)
+        }
     }
 }

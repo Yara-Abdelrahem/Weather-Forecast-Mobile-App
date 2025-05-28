@@ -29,7 +29,7 @@ import java.util.Calendar
 
 class SelectTimeFragment : Fragment() {
     private lateinit var btnSetAlert: Button
-    private lateinit var btnStopAlarm: Button
+//    private lateinit var btnStopAlarm: Button
     private lateinit var alarmViewModel: AlarmViewModel
     private var mediaPlayer: MediaPlayer? = null
     private var currentAlarmId: Int? = null
@@ -44,7 +44,7 @@ class SelectTimeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnSetAlert = view.findViewById(R.id.btn_set_alert)
-        btnStopAlarm = view.findViewById(R.id.btn_stop_alarm)
+//        btnStopAlarm = view.findViewById(R.id.btn_stop_alarm)
         alarmViewModel = AlarmViewModel(requireContext())
 
         val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
@@ -90,37 +90,42 @@ class SelectTimeFragment : Fragment() {
                 }
             }
 
-            val alarmData = AlertItem(time = calendar.timeInMillis, msg = "Wake up!", type = alertType)
+            val alarmData = AlertItem(time = calendar.timeInMillis, msg = "Check The Weather", type = alertType)
             lifecycleScope.launch {
                 val alarmId = alarmViewModel.setAlarm(alarmData)
                 currentAlarmId = alarmId
                 val dateTimeString = "${day}/${month + 1}/${year} $hour:$minute"
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Alert set for $dateTimeString as $alertType with ID $alarmId", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Alert set for $dateTimeString as $alertType", Toast.LENGTH_SHORT).show()
                 }
 
-                if (alertType == "alarm") {
-                    btnStopAlarm.visibility = View.VISIBLE
-                }
+//                if (alertType == "alarm") {
+//                    btnStopAlarm.visibility = View.VISIBLE
+//                }
 
                 val activity = requireActivity() as INavFragmaent
                 activity.navigateTo(AlertFragment(), false)
             }
         }
 
-        btnStopAlarm.setOnClickListener {
-            stopAlarm()
-            currentAlarmId?.let { id ->
-                lifecycleScope.launch {
-                    alarmViewModel.deleteAlert(id)
-                    withContext(Dispatchers.Main) {
-                        btnStopAlarm.visibility = View.GONE
-                    }
-                }
-                currentAlarmId = null
-                Toast.makeText(requireContext(), "Alarm stopped and deleted", Toast.LENGTH_SHORT).show()
-            }
-        }
+//        btnStopAlarm.setOnClickListener {
+//            stopAlarm()
+//            currentAlarmId?.let { id ->
+//                lifecycleScope.launch {
+//                    val alert = alarmViewModel.getAlertById(id)
+//                    if (alert != null) {
+//                        alarmViewModel.cancelScheduledAlarm(requireContext(), alert) // cancel from AlarmManager
+//                        alarmViewModel.deleteAlert(alert) // delete from DB
+//                    }
+//                    withContext(Dispatchers.Main) {
+//                        btnStopAlarm.visibility = View.GONE
+//                        Toast.makeText(requireContext(), "Alarm stopped and deleted", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//                currentAlarmId = null
+//            }
+//        }
+
     }
 
     private fun stopAlarm() {
