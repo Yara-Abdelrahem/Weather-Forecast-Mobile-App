@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.weathery.Home.View.MapSelectionFragment
+import com.example.weathery.View.INavFragmaent
+import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
 import com.example.weathery.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -75,7 +78,10 @@ class SettingsFragment : Fragment() {
                 else -> "GPS"
             }
             prefs.edit().putString(KEY_LOCATION_METHOD, selectedMethod).apply()
-        }
+            if (selectedMethod == "Map") {
+                val activity = requireActivity() as INavFragmaent
+                activity.navigateTo(MapSelectionFragment(), false)
+            }        }
         binding.languageGroup.setOnCheckedChangeListener { _, checkedId ->
             val selectedLanguage = when (checkedId) {
                 binding.radioEnglish.id -> "English"

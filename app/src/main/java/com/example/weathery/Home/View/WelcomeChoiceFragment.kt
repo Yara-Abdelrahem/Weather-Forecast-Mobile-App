@@ -34,8 +34,7 @@ class WelcomeChoiceFragment : Fragment() {
         view.findViewById<Button>(R.id.btnUseMap).setOnClickListener {
             prefs.edit().putString("location_method", "Map").apply()
             // instead of going straight home, first open map chooser
-            (requireActivity() as INavFragmaent)
-                .navigateTo(MapSelectionFragment(), true)
+            (requireActivity() as INavFragmaent).navigateTo(MapSelectionFragment(), true)
         }
     }
 

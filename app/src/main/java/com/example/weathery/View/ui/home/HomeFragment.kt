@@ -119,11 +119,7 @@ class HomeFragment() : Fragment() {
                     requireContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                locHelper.getCurrentLocation { lat, lon ->
-                    viewModel.loadForecasts(lat, lon, apiKey)
-                }
-            } else {
+            ) else {
                 binding.progressBar.isVisible = false
                 binding.errorText.apply {
                     text = "Location permission denied"

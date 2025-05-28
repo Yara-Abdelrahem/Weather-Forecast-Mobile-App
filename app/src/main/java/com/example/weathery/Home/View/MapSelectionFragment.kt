@@ -1,8 +1,10 @@
 package com.example.weathery.Home.View
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -10,7 +12,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.weathery.AlarmAlert.AlarmActivity
 import com.example.weathery.R
+import com.example.weathery.View.HomeActivity
 import com.example.weathery.View.INavFragmaent
 import com.example.weathery.View.ui.home.HomeFragment
 import org.osmdroid.config.Configuration
@@ -74,10 +78,12 @@ class MapSelectionFragment : Fragment() {
                     .putFloat("saved_latitude", pt.latitude.toFloat())
                     .putFloat("saved_longitude", pt.longitude.toFloat())
                     .apply()
-
+                    Log.d("MapSelectionFragment", "Location saved: ${pt.latitude}, ${pt.longitude}")
                 // navigate back to HomeFragment
-                (requireActivity() as INavFragmaent)
-                    .navigateTo(HomeFragment(), false)
+                val intent = Intent(requireContext(), HomeActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                startActivity(intent)
             } ?: run {
                 Toast.makeText(requireContext(),
                     "Please tap on the map to select a location first",

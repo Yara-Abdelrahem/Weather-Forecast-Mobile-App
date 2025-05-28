@@ -99,32 +99,10 @@ class SelectTimeFragment : Fragment() {
                     Toast.makeText(requireContext(), "Alert set for $dateTimeString as $alertType", Toast.LENGTH_SHORT).show()
                 }
 
-//                if (alertType == "alarm") {
-//                    btnStopAlarm.visibility = View.VISIBLE
-//                }
-
                 val activity = requireActivity() as INavFragmaent
                 activity.navigateTo(AlertFragment(), false)
             }
         }
-
-//        btnStopAlarm.setOnClickListener {
-//            stopAlarm()
-//            currentAlarmId?.let { id ->
-//                lifecycleScope.launch {
-//                    val alert = alarmViewModel.getAlertById(id)
-//                    if (alert != null) {
-//                        alarmViewModel.cancelScheduledAlarm(requireContext(), alert) // cancel from AlarmManager
-//                        alarmViewModel.deleteAlert(alert) // delete from DB
-//                    }
-//                    withContext(Dispatchers.Main) {
-//                        btnStopAlarm.visibility = View.GONE
-//                        Toast.makeText(requireContext(), "Alarm stopped and deleted", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                currentAlarmId = null
-//            }
-//        }
 
     }
 

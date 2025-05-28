@@ -42,7 +42,13 @@ class AlertAdapter(
         }
     }
 
-    override fun getItemCount() = alerts.size
+    override fun getItemCount(): Int {
+        if (alerts.isNotEmpty()) {
+            return alerts.size
+        }else{
+            return 0
+        }
+    }
 
     fun setAlerts(newAlerts: MutableList<AlertItem>) {
         alerts = newAlerts
