@@ -5,6 +5,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.weathery.AlarmAlert.Model.AlarmLocalDataSource
 import com.example.weathery.AlarmAlert.Model.AlertItem
@@ -19,8 +21,13 @@ class AlarmViewModel(val context: Context) : ViewModel() {
     private val localDataSource = AlarmLocalDataSource(dao)
     private val repository = AlarmRepository(localDataSource)
 
+    private val _alerts = MutableLiveData<List<AlertItem>>()
+    val alerts: LiveData<List<AlertItem>> get() = _alerts
+
     suspend fun setAlarm(alertItem: AlertItem): Int = withContext(Dispatchers.IO) {
-        repository.setAlarm(context, alertItem)
+        var id =repository.setAlarm(context, alertItem)
+        loadAlerts()
+         id
     }
 
     suspend fun insertAlert(alert: AlertItem): Long = withContext(Dispatchers.IO) {
@@ -37,10 +44,16 @@ class AlarmViewModel(val context: Context) : ViewModel() {
 
     suspend fun deleteAlertById(id: Int) = withContext(Dispatchers.IO) {
         repository.deleteAlertById(id)
+        loadAlerts()
     }
 
     suspend fun getAlertById(id: Int): AlertItem? = withContext(Dispatchers.IO) {
         repository.getAlertById(id)
+    }
+    suspend fun loadAlerts() {
+        val now = System.currentTimeMillis()
+        val allAlerts = repository.getAllAlerts()
+        _alerts.postValue(allAlerts.filter { it.time > now })
     }
 
     fun cancelScheduledAlarm(context: Context, alertItem: AlertItem) {

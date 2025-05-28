@@ -1,5 +1,6 @@
 package com.example.weathery.Favorite.Adapter
 
+import android.os.Bundle
 import com.example.weathery.R
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathery.Favorite.Model.FavoriteCity
 import com.example.weathery.View.IFavClickListener
+import com.example.weathery.View.ui.home.HomeFragment
 
 class FavCityAdapter(val items: MutableLiveData<List<FavoriteCity>>, val listener: IFavClickListener)
     : RecyclerView.Adapter<FavCityAdapter.ViewHolder>() {
@@ -49,6 +51,8 @@ class FavCityAdapter(val items: MutableLiveData<List<FavoriteCity>>, val listene
     override fun getItemCount(): Int {
         return items.value.size
     }
+
+
     class ViewHolder(val item: View) : RecyclerView.ViewHolder(item) {
         val tv_city_name = item.findViewById<TextView>(R.id.tv_city_name)
         val btn_delet_fav_city = item.findViewById<Button>(R.id.btn_delete_fav_city)

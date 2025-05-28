@@ -17,6 +17,7 @@ import com.example.weathery.Favorite.Adapter.FavCityAdapter
 import com.example.weathery.View.IFavClickListener
 import com.example.weathery.View.INavFragmaent
 import com.example.weathery.Favorite.ViewModel.FavoriteCityViewModel
+import com.example.weathery.View.ui.home.HomeFragment
 import com.example.weathery.WeatherDatabase
 import kotlinx.coroutines.launch
 
@@ -61,24 +62,21 @@ class ShowFavoriteFragment : Fragment()  , IFavClickListener {
         }
         btn_add_favorite.setOnClickListener {
             val activity = requireActivity() as INavFragmaent
-
             activity.navigateTo(SelectFavoriteLocationFragment(),false)
-//                    childFragmentManager.beginTransaction()
-//            .replace(R.id.fragment_container, SelectFavoriteLocationFragment())
-//            .addToBackStack(null)
-//            .commit()
-
-
-//            requireActivity().supportFragmentManager
-//                .beginTransaction()
-//                .replace(R.id.fragment_container, SelectFavoriteLocationFragment())
-//                .addToBackStack(null)
-//                .commit()
         }
     }
 
     override fun onNameCityClick(city: FavoriteCity) {
         //show city details
+        val homeFrag = HomeFragment(lat = city.city_lat, lon = city.city_lon)
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, homeFrag)
+            .addToBackStack(null)
+            .commit()
+
+
+
     }
 
     override fun onDeleteFavCityClick(city: FavoriteCity) {

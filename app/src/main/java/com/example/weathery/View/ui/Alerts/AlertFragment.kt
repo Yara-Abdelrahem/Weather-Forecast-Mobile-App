@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,18 +20,13 @@ import com.example.weathery.databinding.FragmentAlertBinding
 import kotlinx.coroutines.launch
 
 class AlertFragment : Fragment() {
-
     private var _binding: FragmentAlertBinding? = null
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var alertViewModel: AlarmViewModel
-    private lateinit var adapter: AlertAdapter
     private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    private lateinit var alertViewModel: AlarmViewModel
+    private lateinit var adapter: AlertAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         alertViewModel = AlarmViewModel(requireContext())
         _binding = FragmentAlertBinding.inflate(inflater, container, false)
         return binding.root
@@ -39,25 +35,17 @@ class AlertFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.alertRecyclerView)
-        val fab = view.findViewById<Button>(R.id.fab)
+        binding.alertRecyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = AlertAdapter(mutableListOf(), alertViewModel, viewLifecycleOwner.lifecycleScope)
+        binding.alertRecyclerView.adapter = adapter
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = AlertAdapter(mutableListOf(), alertViewModel, lifecycleScope)
-        recyclerView.adapter = adapter
+        alertViewModel.alerts.observe(viewLifecycleOwner) { alertsList ->
+            adapter.setAlerts(alertsList.toMutableList())
+        }
 
-        loadAlerts()
-
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             val activity = requireActivity() as INavFragmaent
             activity.navigateTo(SelectTimeFragment(), false)
-        }
-    }
-
-    private fun loadAlerts() {
-        lifecycleScope.launch {
-            val alertsList = alertViewModel.getAllAlerts()
-            adapter.setAlerts(alertsList.toMutableList())
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.weathery.AlarmAlert.View
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathery.AlarmAlert.Model.AlertItem
 import com.example.weathery.AlarmAlert.ViewModel.AlarmViewModel
@@ -34,16 +35,10 @@ class AlertAdapter(
                 coroutineScope.launch {
                     withContext(Dispatchers.IO) {
                         viewModel.cancelScheduledAlarm(root.context, alert)
-                        viewModel.deleteAlertById(alert.id)
-                    }
-                    withContext(Dispatchers.Main) {
-                        alerts.removeAt(position)
-                        notifyItemRemoved(position)
-                        notifyItemRangeChanged(position, alerts.size)
+                        viewModel.deleteAlertById(alert.id) // This triggers LiveData update
                     }
                 }
             }
-
         }
     }
 

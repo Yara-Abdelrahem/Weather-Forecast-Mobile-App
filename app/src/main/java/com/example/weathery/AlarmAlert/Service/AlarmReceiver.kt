@@ -64,4 +64,10 @@ class AlarmReceiver : BroadcastReceiver() {
             db.weatherDao().deleteAlertById(id)
         }
     }
+
+    fun stopAlarm() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
 }
