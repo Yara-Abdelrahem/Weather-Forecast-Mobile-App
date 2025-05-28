@@ -39,7 +39,7 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity
-            android:name=".View.AlarmAlertActivity"
+            android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.Weathery.NoActionBar" />
@@ -52,6 +52,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".View.AlarmAlertActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Weathery" />
 
         <service
             android:name=".AlarmAlert.Service.AlarmService"
@@ -62,10 +66,7 @@
         <activity
             android:name=".View.FavoriteActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Weathery" />
+
 
         <receiver
             android:name=".AlarmAlert.Service.AlarmReceiver"

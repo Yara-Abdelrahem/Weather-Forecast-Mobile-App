@@ -1,4 +1,4 @@
-package com.example.weathery.Home.Adapter
+package com.example.weathery.Home.View
 
 import com.bumptech.glide.Glide
 import com.example.weathery.R

@@ -68,7 +68,7 @@ class ShowFavoriteFragment : Fragment()  , IFavClickListener {
 
     override fun onNameCityClick(city: FavoriteCity) {
         //show city details
-        val homeFrag = HomeFragment(lat = city.city_lat, lon = city.city_lon)
+        val homeFrag = HomeFragment(lat = city.city_lat, lon = city.city_lon , favcity = true)
         requireActivity().supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, homeFrag)
