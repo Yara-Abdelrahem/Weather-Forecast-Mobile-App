@@ -33,9 +33,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.weathery.Model.AlertItem
-import com.example.weathery.Model.FavoriteCity
-import com.example.weathery.Model.ForecastItemEntity
+import com.example.weathery.AlarmAlert.Model.AlertItem
+import com.example.weathery.Favorite.Model.FavoriteCity
+import com.example.weathery.Home.Model.ForecastItemEntity
 import com.example.weathery.Model.WeatherDao
 
 @Database(entities = [ForecastItemEntity::class, FavoriteCity::class, AlertItem::class], version = 1, exportSchema = false)

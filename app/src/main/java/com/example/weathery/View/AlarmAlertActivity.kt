@@ -1,16 +1,10 @@
 package com.example.weathery.View
 
-import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weathery.R
-import com.example.weathery.Service.AlarmService
-import com.example.weathery.View.ui.Alerts.ShowAlertFragment
-import com.example.weathery.View.ui.Alerts.SelectTimeFragment
+import com.example.weathery.View.ui.Alerts.AlertFragment
 
 class AlarmAlertActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer
@@ -20,7 +14,7 @@ class AlarmAlertActivity : AppCompatActivity() {
         setContentView(R.layout.activity_alarm_alert)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.frameLayoutAlarm, ShowAlertFragment())
+                .add(R.id.frameLayoutAlarm, AlertFragment())
                 .commit()
         }
 

@@ -10,14 +10,12 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.weathery.R
-import com.example.weathery.View.ui.Alerts.ShowAlertFragment
 import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
 import com.example.weathery.View.ui.home.HomeFragment
-import com.example.weathery.View.INavFragmaent
 import com.example.weathery.databinding.ActivityHomeBinding
-import com.example.weathery.work.LocationHelper
-import com.google.android.material.navigation.NavigationView
+import com.example.weathery.Home.LocationHelper
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.weathery.View.ui.Alerts.AlertFragment
 import com.example.weathery.View.ui.setting.SettingsFragment
 
 class HomeActivity : AppCompatActivity(), INavFragmaent {
@@ -26,7 +24,6 @@ class HomeActivity : AppCompatActivity(), INavFragmaent {
     private lateinit var locHelper: LocationHelper
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +67,7 @@ class HomeActivity : AppCompatActivity(), INavFragmaent {
             when (item.itemId) {
                 R.id.nav_home -> navigateTo(HomeFragment(), true)
                 R.id.nav_fav_city -> navigateTo(ShowFavoriteFragment(), true)
-                R.id.nav_alert -> navigateTo(ShowAlertFragment(), true)
+                R.id.nav_alert -> navigateTo(AlertFragment(), true)
                 R.id.nav_setting -> navigateTo(SettingsFragment(), true)
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -108,7 +105,7 @@ class HomeActivity : AppCompatActivity(), INavFragmaent {
 //import com.example.weathery.View.ui.home.HomeFragment
 //import com.example.weathery.View.INavFragmaent
 //import com.example.weathery.databinding.ActivityHomeBinding
-//import com.example.weathery.work.LocationHelper
+//import com.example.weathery.Home.LocationHelper
 //import com.google.android.material.navigation.NavigationView
 //import androidx.navigation.ui.AppBarConfiguration
 //import com.example.weathery.View.ui.setting.SettingsFragment

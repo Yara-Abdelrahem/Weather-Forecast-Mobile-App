@@ -9,15 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weathery.Model.FavoriteCity
-import com.example.weathery.Model.FavoriteCityRepositry
-import com.example.weathery.Model.LocalFavorityCityDatasource
+import com.example.weathery.Favorite.Model.FavoriteCity
+import com.example.weathery.Favorite.Model.FavoriteCityRepositry
+import com.example.weathery.Favorite.Model.LocalFavorityCityDatasource
 import com.example.weathery.R
-import com.example.weathery.View.Adapter.FavCityAdapter
-import com.example.weathery.View.FavoriteActivity
+import com.example.weathery.Favorite.Adapter.FavCityAdapter
 import com.example.weathery.View.IFavClickListener
 import com.example.weathery.View.INavFragmaent
-import com.example.weathery.ViewModel.FavoriteCityViewModel
+import com.example.weathery.Favorite.ViewModel.FavoriteCityViewModel
 import com.example.weathery.WeatherDatabase
 import kotlinx.coroutines.launch
 

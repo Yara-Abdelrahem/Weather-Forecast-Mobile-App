@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.example.weathery.Model.FavoriteCity
-import com.example.weathery.Model.FavoriteCityRepositry
-import com.example.weathery.Model.LocalFavorityCityDatasource
+import com.example.weathery.Favorite.Model.FavoriteCityRepositry
+import com.example.weathery.Favorite.Model.LocalFavorityCityDatasource
 import com.example.weathery.R
-import com.example.weathery.ViewModel.FavoriteCityViewModel
+import com.example.weathery.Favorite.ViewModel.FavoriteCityViewModel
 import com.example.weathery.WeatherDatabase
 import com.example.weathery.databinding.FragmentFavCityBinding
-import kotlinx.coroutines.launch
 
 class FavoriteFragment : Fragment() {
 

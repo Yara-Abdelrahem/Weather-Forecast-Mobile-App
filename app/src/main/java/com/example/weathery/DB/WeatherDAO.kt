@@ -4,11 +4,9 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.lifecycle.LiveData
-import androidx.room.OnConflictStrategy
-import com.example.weathery.CurrentWeatherEntity
-import com.example.weathery.DailyForecastEntity
-import com.example.weathery.HourlyForecastEntity
+import com.example.weathery.AlarmAlert.Model.AlertItem
+import com.example.weathery.Favorite.Model.FavoriteCity
+import com.example.weathery.Home.Model.ForecastItemEntity
 
 @Dao
 interface WeatherDao {
@@ -55,12 +53,16 @@ interface WeatherDao {
     suspend fun delete_fav_city(fav_city : FavoriteCity)
 
     //--------------------------------------------------------------
+
     @Insert
-    suspend fun insertAlert(alertItem: AlertItem)
+    suspend fun insertAlert(alert: AlertItem): Long
 
     @Query("SELECT * FROM AlertTable")
     suspend fun getAllAlerts(): List<AlertItem>
 
     @Delete
     suspend fun deleteAlert(alertItem: AlertItem)
+
+    @Query("DELETE FROM AlertTable WHERE id = :id")
+    suspend fun deleteAlertById(id:Int)
 }
