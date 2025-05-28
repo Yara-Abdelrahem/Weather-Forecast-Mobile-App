@@ -10,39 +10,6 @@ import com.example.weathery.CurrentWeatherEntity
 import com.example.weathery.DailyForecastEntity
 import com.example.weathery.HourlyForecastEntity
 
-//@Dao
-//interface CurrentWeatherDao {
-//    @Query("SELECT * FROM current_weather WHERE id = 1")
-//    fun getCurrentWeather(): LiveData<CurrentWeatherEntity>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertCurrentWeather(weather: CurrentWeatherEntity)
-//}
-//
-//@Dao
-//interface HourlyForecastDao {
-//    @Query("SELECT * FROM hourly_forecasts ORDER BY dateTime ASC")
-//    fun getAllHourlyForecasts(): LiveData<List<HourlyForecastEntity>>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertHourlyForecasts(forecasts: List<HourlyForecastEntity>)
-//
-//    @Query("DELETE FROM hourly_forecasts")
-//    suspend fun deleteAllHourlyForecasts()
-//}
-//
-//@Dao
-//interface DailyForecastDao {
-//    @Query("SELECT * FROM daily_forecasts ORDER BY dateTime ASC")
-//    fun getAllDailyForecasts(): LiveData<List<DailyForecastEntity>>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertDailyForecasts(forecasts: List<DailyForecastEntity>)
-//
-//    @Query("DELETE FROM daily_forecasts")
-//    suspend fun deleteAllDailyForecasts()
-//}
-
 @Dao
 interface WeatherDao {
     @Insert
@@ -54,8 +21,27 @@ interface WeatherDao {
     @Query("SELECT * FROM forecast_items WHERE cityName = :name")
     suspend fun getForecastsWithName(name: String): List<ForecastItemEntity>
 
+    @Query("""
+    SELECT * FROM forecast_items 
+    WHERE latitude BETWEEN :lat - :delta AND :lat + :delta
+    AND longitude BETWEEN :lon - :delta AND :lon + :delta
+""")
+    suspend fun getForecastsWithLatLong(lat: Double, lon: Double, delta: Double = 0.0001): List<ForecastItemEntity>
+
     @Query("DELETE FROM forecast_items")
     suspend fun clearAll()
+
+    @Query("DELETE FROM forecast_items WHERE latitude = :lat AND longitude = :lon")
+    suspend fun clear(lat: Double, lon: Double)
+
+    @Query("""
+        DELETE FROM forecast_items 
+        WHERE dateTime < :todayStart 
+        AND dateTime > :todayStart+3600000
+        AND latitude = :lat 
+        AND longitude = :lon
+    """)
+        suspend fun deleteOldForecasts(todayStart: Long, lat: Double, lon: Double)
 
     //--------------------------------------------------------------
 

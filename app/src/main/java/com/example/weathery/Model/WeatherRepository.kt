@@ -1,60 +1,3 @@
-//package com.example.weathery
-//
-//import androidx.lifecycle.LiveData
-//import com.example.weathery.Model.CurrentWeatherDao
-//import com.example.weathery.Model.DailyForecastDao
-//import com.example.weathery.Model.HourlyForecastDao
-//
-//class WeatherRepository(
-//    private val currentWeatherDao: CurrentWeatherDao,
-//    private val hourlyForecastDao: HourlyForecastDao,
-//    private val dailyForecastDao: DailyForecastDao
-//) {
-//    val currentWeather: LiveData<CurrentWeatherEntity> = currentWeatherDao.getCurrentWeather()
-//    val hourlyForecasts: LiveData<List<HourlyForecastEntity>> = hourlyForecastDao.getAllHourlyForecasts()
-//    val dailyForecasts: LiveData<List<DailyForecastEntity>> = dailyForecastDao.getAllDailyForecasts()
-//
-//    suspend fun refreshWeatherData(lat: Double, lon: Double) {
-//        try {
-//            val response = WeatherRemoteDataSource.getWeatherData(lat, lon)
-//            // Clear existing data
-//            hourlyForecastDao.deleteAllHourlyForecasts()
-//            dailyForecastDao.deleteAllDailyForecasts()
-//            // Insert new data
-//            val hourlyEntities = response.hourly.map {
-//                HourlyForecastEntity(
-//                    dateTime = it.dt,
-//                    temperature = it.temp,
-//                    description = it.weather[0].description,
-//                    icon = it.weather[0].icon
-//                )
-//            }
-//            hourlyForecastDao.insertHourlyForecasts(hourlyEntities)
-//            val dailyEntities = response.daily.drop(1).map {
-//                DailyForecastEntity(
-//                    dateTime = it.dt,
-//                    tempMin = it.temp.min,
-//                    tempMax = it.temp.max,
-//                    description = it.weather[0].description,
-//                    icon = it.weather[0].icon
-//                )
-//            }
-//            dailyForecastDao.insertDailyForecasts(dailyEntities)
-//            // Insert current weather
-//            val currentWeather = CurrentWeatherEntity(
-//                cityName = response.city.name,
-//                temperature = response.current.temp,
-//                description = response.current.weather[0].description,
-//                icon = response.current.weather[0].icon
-//            )
-//            currentWeatherDao.insertCurrentWeather(currentWeather)
-//        } catch (e: Exception) {
-//            // Handle error (e.g., log or expose to ViewModel)
-//            throw e
-//        }
-//    }
-//}
-
 package com.example.weathery
 
 import com.example.weathery.Model.ForecastItemEntity
@@ -66,6 +9,8 @@ import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.Calendar
+
 class WeatherRepository(
     private val dao: WeatherDao,
     private val weatherRemoteDataSource: WeatherRemoteDataSource
@@ -94,11 +39,14 @@ class WeatherRepository(
                             visibility = weatherData.visibility,
                             description = weatherData.weather.firstOrNull()?.description ?: "",
                             icon = weatherData.weather.firstOrNull()?.icon ?: "",
-                            cityName = response.city.name
+                            cityName = response.city.name,
+                            latitude = response.city.coord.lat,
+                            longitude = response.city.coord.lon
                         )
                     }
                     withContext(Dispatchers.IO) {
                         dao.clearAll()
+                        clearOldForecastsForLocation(lat, lon)
                         dao.insertAll(entities)
                     }
                 }
@@ -109,6 +57,24 @@ class WeatherRepository(
     suspend fun getStoredForecasts(): List<ForecastItemEntity> {
         return withContext(Dispatchers.IO) {
             dao.getAllForecasts()
+        }
+    }
+
+    suspend fun clearOldForecastsForLocation(latitude: Double, longitude: Double) {
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        val todayStart = calendar.timeInMillis
+        dao.deleteOldForecasts(todayStart, latitude, longitude)
+    }
+
+
+    suspend fun getForecastsWithLatLong(lat: Double, lon: Double): List<ForecastItemEntity> {
+        return withContext(Dispatchers.IO) {
+            dao.getForecastsWithLatLong(lat, lon)
         }
     }
 
@@ -170,7 +136,9 @@ class WeatherRepository(
                     visibility  = avgVisibility.toInt(),   // if 'visibility' is Int
                     description = description,
                     icon        = icon,
-                    cityName    = cityName
+                    cityName    = cityName,
+                    latitude    = items.first().latitude,
+                    longitude   = items.first().longitude
                 )
             }
 

@@ -18,5 +18,7 @@ data class ForecastItemEntity(
     val visibility: Int,
     val description: String,
     val icon: String,
-    val cityName: String
+    val cityName: String,
+    val latitude: Double ,
+    val longitude: Double
 )
