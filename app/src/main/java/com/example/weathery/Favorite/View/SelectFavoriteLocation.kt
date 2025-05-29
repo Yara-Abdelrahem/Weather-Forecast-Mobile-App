@@ -1,4 +1,4 @@
-package com.example.weathery.View.ui.FavoriteCity
+package com.example.weathery.Favorite.View
 
 import android.annotation.SuppressLint
 import android.os.Bundle

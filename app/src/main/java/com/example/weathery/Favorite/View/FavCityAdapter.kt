@@ -1,6 +1,5 @@
-package com.example.weathery.Favorite.Adapter
+package com.example.weathery.Favorite.View
 
-import android.os.Bundle
 import com.example.weathery.R
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathery.Favorite.Model.FavoriteCity
 import com.example.weathery.View.IFavClickListener
-import com.example.weathery.View.ui.home.HomeFragment
 
 class FavCityAdapter(val items: MutableLiveData<List<FavoriteCity>>, val listener: IFavClickListener)
     : RecyclerView.Adapter<FavCityAdapter.ViewHolder>() {

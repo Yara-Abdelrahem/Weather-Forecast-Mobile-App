@@ -8,8 +8,8 @@ import com.example.weathery.Favorite.Model.FavoriteCity
 import com.example.weathery.Favorite.Model.FavoriteCityRepositry
 import com.example.weathery.Favorite.Model.LocalFavorityCityDatasource
 import com.example.weathery.R
-import com.example.weathery.View.ui.FavoriteCity.SelectFavoriteLocationFragment
-import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
+import com.example.weathery.Favorite.View.SelectFavoriteLocationFragment
+import com.example.weathery.Favorite.View.ShowFavoriteFragment
 import com.example.weathery.Favorite.ViewModel.FavoriteCityViewModel
 import com.example.weathery.WeatherDatabase
 import kotlinx.coroutines.launch

@@ -10,14 +10,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.weathery.R
-import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
-import com.example.weathery.View.ui.home.HomeFragment
+import com.example.weathery.Favorite.View.ShowFavoriteFragment
+import com.example.weathery.Home.View.HomeFragment
 import com.example.weathery.Home.View.WelcomeChoiceFragment
-import com.example.weathery.View.ui.Alerts.AlertFragment
-import com.example.weathery.View.ui.setting.SettingsFragment
+import com.example.weathery.AlarmAlert.View.AlertFragment
+import com.example.weathery.Settings.View.SettingsFragment
 import com.example.weathery.databinding.ActivityHomeBinding
 import com.example.weathery.Home.LocationHelper
 

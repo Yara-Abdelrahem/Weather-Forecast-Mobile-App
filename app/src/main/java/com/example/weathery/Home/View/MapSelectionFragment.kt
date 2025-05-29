@@ -16,7 +16,7 @@ import com.example.weathery.AlarmAlert.AlarmActivity
 import com.example.weathery.R
 import com.example.weathery.View.HomeActivity
 import com.example.weathery.View.INavFragmaent
-import com.example.weathery.View.ui.home.HomeFragment
+import com.example.weathery.Home.View.HomeFragment
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView

@@ -1,9 +1,10 @@
-package com.example.weathery.View.ui.Alerts
+package com.example.weathery.AlarmAlert.View
 
 import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -16,7 +17,6 @@ import android.widget.RadioGroup
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.weathery.AlarmAlert.Model.AlertItem
 import com.example.weathery.AlarmAlert.ViewModel.AlarmViewModel
@@ -57,7 +57,7 @@ class SelectTimeFragment : Fragment() {
                 val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 if (!alarmManager.canScheduleExactAlarms()) {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                        data = android.net.Uri.fromParts("package", requireContext().packageName, null)
+                        data = Uri.fromParts("package", requireContext().packageName, null)
                     }
                     startActivity(intent)
                     Toast.makeText(requireContext(), "Please enable exact alarm permission in app settings", Toast.LENGTH_LONG).show()

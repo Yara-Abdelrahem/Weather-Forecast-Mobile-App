@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.weathery.View.ui.home.HomeFragment"
+        android:name="com.example.weathery.Home.View.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_fav_city"
-        android:name="com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment"
+        android:name="com.example.weathery.Favorite.View.ShowFavoriteFragment"
         android:label="@string/favorite"
         tools:layout="@layout/fragment_fav_city" />
 
     <fragment
         android:id="@+id/nav_alert"
-        android:name="com.example.weathery.View.ui.Alerts.AlertFragment"
+        android:name="com.example.weathery.AlarmAlert.View.AlertFragment"
         android:label="@string/alert"
         tools:layout="@layout/fragment_alert" />
     <fragment
         android:id="@+id/nav_setting"
-        android:name="com.example.weathery.View.ui.setting.SettingsFragment"
+        android:name="com.example.weathery.Settings.View.SettingsFragment"
         android:label="@string/setting"
         tools:layout="@layout/fragment_settings" />
 </navigation>

@@ -1,6 +1,7 @@
-package com.example.weathery.View.ui.home
+package com.example.weathery.Home.View
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresPermission
+import androidx.appcompat.R
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,14 +21,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.weathery.ForecastAdapter
-import com.example.weathery.Home.View.DailyForecastAdapter
-import com.example.weathery.HourlyForecastAdapter
-import com.example.weathery.Home.ViewModel.WeatherViewModel
 import com.example.weathery.Home.LocationHelper
+import com.example.weathery.Home.ViewModel.WeatherViewModel
+import com.example.weathery.HourlyForecastAdapter
+import com.example.weathery.View.HomeActivity
 import com.example.weathery.WeatherDatabase
 import com.example.weathery.WeatherRepository
 import com.example.weathery.databinding.FragmentHomeBinding
-import com.example.weathery.View.HomeActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -60,9 +61,9 @@ class HomeFragment() : Fragment() {
     private val viewModel: WeatherViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val dao = WeatherDatabase.getDatabase(requireContext()).weatherDao()
+                val dao = WeatherDatabase.Companion.getDatabase(requireContext()).weatherDao()
                 @Suppress("UNCHECKED_CAST")
-                return WeatherViewModel(WeatherRepository.create(dao)) as T
+                return WeatherViewModel(WeatherRepository.Companion.create(dao)) as T
             }
         }
     }
@@ -86,7 +87,7 @@ class HomeFragment() : Fragment() {
         // 1) toolbar + lists
         binding.toolbar.apply {
             title = "Home"
-            setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_menu_overflow_material)
+            setNavigationIcon(R.drawable.abc_ic_menu_overflow_material)
         }
         binding.hourlyForecastRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -168,6 +169,7 @@ class HomeFragment() : Fragment() {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun setupObservers() {
         binding.progressBar.isVisible = true
         viewModel.weatherResponse.observe(viewLifecycleOwner) { resp ->
@@ -210,6 +212,8 @@ class HomeFragment() : Fragment() {
                 binding.windText.text = String.format("%.1f %s", ws,
                     if (windSpeedUnit == "meter/sec") "m/s" else "mph"
                 )
+                binding.visibilityText.text = String.format("%.1f km", f.visibility / 1000.0)
+                binding.cloudText.text = "${f.cloud}%"
             }
         }
 

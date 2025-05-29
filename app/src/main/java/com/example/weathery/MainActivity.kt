@@ -10,7 +10,7 @@ import com.example.weathery.View.INavFragmaent
 import com.example.weathery.databinding.ActivityMainBinding
 import com.example.weathery.Home.View.WelcomeChoiceFragment
 import com.example.weathery.View.HomeActivity
-import com.example.weathery.View.ui.home.HomeFragment
+import com.example.weathery.Home.View.HomeFragment
 
 class MainActivity : AppCompatActivity(), INavFragmaent {
     private lateinit var binding: ActivityMainBinding

@@ -1,6 +1,6 @@
-package com.example.weathery.View.ui.setting
+package com.example.weathery.Settings.View
+
 import android.content.Context
-import android.media.MediaFormat.KEY_LANGUAGE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weathery.Home.View.MapSelectionFragment
 import com.example.weathery.View.INavFragmaent
-import com.example.weathery.View.ui.FavoriteCity.ShowFavoriteFragment
 import com.example.weathery.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
