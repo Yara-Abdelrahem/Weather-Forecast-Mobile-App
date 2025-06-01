@@ -14,7 +14,7 @@ import com.example.weathery.R
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.weathery.AlarmAlert.AlarmActivity
-import com.example.weathery.View.AlarmAlertActivity
+import com.example.weathery.AlarmAlert.View.AlarmAlertActivity
 import com.example.weathery.WeatherDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

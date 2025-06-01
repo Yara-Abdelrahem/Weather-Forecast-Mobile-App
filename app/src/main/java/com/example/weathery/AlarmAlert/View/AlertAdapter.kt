@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AlertAdapter(
-    private var alerts: MutableList<AlertItem>,
+    private var alerts: MutableList<AlertItem> = mutableListOf(),
     private val viewModel: AlarmViewModel,
     private val coroutineScope: CoroutineScope
 ) : RecyclerView.Adapter<AlertAdapter.AlertViewHolder>() {

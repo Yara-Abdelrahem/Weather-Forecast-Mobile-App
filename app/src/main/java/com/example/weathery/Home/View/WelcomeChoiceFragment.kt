@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.example.weathery.R
-import com.example.weathery.View.INavFragmaent
+import com.example.weathery.Home.INavFragmaent
 import com.example.weathery.Home.View.HomeFragment
 
 class WelcomeChoiceFragment : Fragment() {

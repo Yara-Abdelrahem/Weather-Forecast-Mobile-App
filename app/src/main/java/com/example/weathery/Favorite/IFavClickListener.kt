@@ -1,4 +1,4 @@
-package com.example.weathery.View
+package com.example.weathery.Favorite
 
 import com.example.weathery.Favorite.Model.FavoriteCity
 
@@ -7,4 +7,3 @@ interface IFavClickListener {
      fun onNameCityClick(city: FavoriteCity)
      fun onDeleteFavCityClick(city: FavoriteCity)
 }
-

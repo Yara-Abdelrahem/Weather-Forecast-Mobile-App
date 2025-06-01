@@ -1,4 +1,4 @@
-package com.example.weathery.View
+package com.example.weathery.Home
 
 import androidx.fragment.app.Fragment
 

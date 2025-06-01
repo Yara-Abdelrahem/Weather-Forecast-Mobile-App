@@ -35,6 +35,8 @@ class AlarmViewModel(val context: Context) : ViewModel() {
     }
 
     suspend fun getAllAlerts(): List<AlertItem> = withContext(Dispatchers.IO) {
+
+
         repository.getAllAlerts()
     }
 

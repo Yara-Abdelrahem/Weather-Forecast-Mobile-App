@@ -1,14 +1,18 @@
 package com.example.weathery.Settings.View
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weathery.Home.View.MapSelectionFragment
-import com.example.weathery.View.INavFragmaent
+import com.example.weathery.MainActivity
+import com.example.weathery.Home.View.HomeActivity
+import com.example.weathery.Home.INavFragmaent
 import com.example.weathery.databinding.FragmentSettingsBinding
+import java.util.Locale
 
 class SettingsFragment : Fragment() {
 
@@ -87,15 +91,34 @@ class SettingsFragment : Fragment() {
                 binding.radioArabic.id -> "Arabic"
                 else -> "English"
             }
-            prefs.edit().putString(KEY_LANGUAGE, selectedLanguage).apply()
-        }
 
+            val languageCode = if (selectedLanguage == "English") "en" else "ar"
+            setLocale(requireContext(), languageCode)
+            prefs.edit().putString(KEY_LANGUAGE, selectedLanguage).apply()
+//            requireActivity().recreate()
+//            startActivity(requireActivity(), MainActivity::Cl)
+            restartApp()
+        }
         return binding.root
     }
+    fun setLocale(context: Context, languageCode: String): Context {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = context.resources.configuration
+        config.setLocale(locale)
+        return context.createConfigurationContext(config)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    private fun restartApp() {
+        val intent = Intent(requireActivity(), HomeActivity::class.java)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     companion object {

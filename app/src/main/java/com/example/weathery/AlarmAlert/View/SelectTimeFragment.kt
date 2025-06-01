@@ -21,7 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.weathery.AlarmAlert.Model.AlertItem
 import com.example.weathery.AlarmAlert.ViewModel.AlarmViewModel
 import com.example.weathery.R
-import com.example.weathery.View.INavFragmaent
+import com.example.weathery.Home.INavFragmaent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -68,7 +68,7 @@ class SelectTimeFragment : Fragment() {
             val hour = timePicker.hour
             val minute = timePicker.minute
             val year = datePicker.year
-            val month = datePicker.month // 0-based (0-11)
+            val month = datePicker.month
             val day = datePicker.dayOfMonth
 
             val alertType = when (alertTypeGroup.checkedRadioButtonId) {

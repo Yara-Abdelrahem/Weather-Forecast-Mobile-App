@@ -1,5 +1,6 @@
 package com.example.weathery.Favorite.View
 
+import FavCityAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,8 @@ import com.example.weathery.Favorite.Model.FavoriteCity
 import com.example.weathery.Favorite.Model.FavoriteCityRepositry
 import com.example.weathery.Favorite.Model.LocalFavorityCityDatasource
 import com.example.weathery.R
-import com.example.weathery.View.IFavClickListener
-import com.example.weathery.View.INavFragmaent
+import com.example.weathery.Favorite.IFavClickListener
+import com.example.weathery.Home.INavFragmaent
 import com.example.weathery.Favorite.ViewModel.FavoriteCityViewModel
 import com.example.weathery.Home.View.HomeFragment
 import com.example.weathery.WeatherDatabase

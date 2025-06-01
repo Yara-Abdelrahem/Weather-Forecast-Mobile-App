@@ -1,4 +1,4 @@
-package com.example.weathery.View
+package com.example.weathery.AlarmAlert
 
 import com.example.weathery.AlarmAlert.Model.AlertItem
 

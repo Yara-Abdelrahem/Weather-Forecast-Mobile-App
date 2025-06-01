@@ -11,20 +11,26 @@
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="How do you want to get your location?"
+        android:text="@string/location_choice"
         android:textSize="18sp"
         android:layout_marginBottom="32dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnUseGPS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Use GPS"
-        android:layout_marginBottom="16dp"/>
+        android:text="@string/GPS"
+        android:layout_marginBottom="16dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/weather_card_background"
+        />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnUseMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pick on Map"/>
+        android:text="@string/Map"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/weather_card_background"
+        />
 </LinearLayout>

@@ -43,11 +43,17 @@ android {
 
 dependencies {
     implementation(libs.androidx.swiperefreshlayout)
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.mockito:mockito-core:4.8.1")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
+
     // Lifecycle components
     implementation ("com.google.android.material:material:1.10.0")
     implementation ("com.google.android.material:material:1.4.0")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.9.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0")
+    testImplementation ("org.mockito:mockito-inline:4.8.1")
 
     // Optional: For Kotlin coroutines support
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.9.0")

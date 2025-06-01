@@ -12,7 +12,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.weathery.R
-import com.example.weathery.View.AlarmAlertActivity
+import com.example.weathery.AlarmAlert.View.AlarmAlertActivity
 
 class AlarmService : Service() {
     val channelId = "alarm_channel"

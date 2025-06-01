@@ -39,7 +39,7 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity
-            android:name=".View.HomeActivity"
+            android:name=".Home.View.HomeActivity"
             android:exported="false"/>
         <activity
             android:name=".MainActivity"
@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.AlarmAlertActivity"
+            android:name=".AlarmAlert.View.AlarmAlertActivity"
             android:exported="false"
             android:theme="@style/Theme.Weathery" />
 
@@ -62,7 +62,7 @@
             android:foregroundServiceType="shortService|mediaPlayback|dataSync" />
 
         <activity
-            android:name=".View.FavoriteActivity"
+            android:name=".Favorite.View.FavoriteActivity"
             android:exported="false" />
 
 

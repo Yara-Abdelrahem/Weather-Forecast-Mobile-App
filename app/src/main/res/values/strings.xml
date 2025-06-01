@@ -67,4 +67,24 @@
     <string name="alert">Alert</string>
     <string name="setting">Setting</string>
     <string name="menu_setting">menu_setting</string>
+    <string name="Dismiss">Dimiss</string>
+    <string name="Alarm">Alarm</string>
+    <string name="Remove">Remove</string>
+    <string name="AddAlert">Add Alert</string>
+    <string name="ConfirmLocation">Confirm Location</string>
+    <string name="SelectLocation">Select Location</string>
+    <string name="SelectAlertType">Select Alert Type</string>
+    <string name="Notification">Notification</string>
+    <string name="SelectDate">Select Date</string>
+    <string name="SelectTime">select time</string>
+    <string name="SetAlert">Set Alarm</string>
+    <string name="TemperatureUnits">Temperature Units</string>
+    <string name="WindSpeedUnits">Wind Speed Units</string>
+    <string name="LocationMethod">Location Method</string>
+    <string name="LanguageMethod">Language Method</string>
+    <string name="AddFavoriteCity">Add Favorite City</string>
+    <string name="location_choice">How do you want to get your location?</string>
+    <string name="GPS">GPS</string>
+    <string name="Map">Map</string>
+    <string name="Stop">Stop</string>
 </resources>

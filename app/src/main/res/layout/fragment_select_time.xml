@@ -1,70 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    >
+    android:background="#121212">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Alert Type"
-        android:textSize="18sp" />
-
-    <RadioGroup
-        android:id="@+id/alertTypeGroup"
+    <!-- Alert Type Section -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RadioButton
-            android:id="@+id/radioNotification"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Notification"
-            android:checked="true" />
+            android:orientation="vertical" >
 
-        <RadioButton
-            android:id="@+id/radioAlarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Alarm" />
-    </RadioGroup>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/SelectAlertType"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Date"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#3A3A3A"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        style="@android:style/Widget.DatePicker"
-        android:layout_width="321dp"
-        android:layout_height="128dp" />
+                <RadioGroup
+                    android:id="@+id/alertTypeGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Time"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp" />
+                    <RadioButton
+                        android:id="@+id/radioNotification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:checked="true"
+                        android:text="@string/Notification"
+                        android:textColor="#E0E0E0"
+                        android:textSize="14sp" />
 
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="303dp"
-        android:layout_height="155dp"
-        android:timePickerMode="spinner" />
+                    <RadioButton
+                        android:id="@+id/radioAlarm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Alarm"
+                        android:textColor="#E0E0E0"
+                        android:textSize="14sp" />
+                </RadioGroup>
+            </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btn_set_alert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Alert"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/SelectDate"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#3A3A3A"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <DatePicker
+                    android:id="@+id/datePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    android:padding="12dp" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/SelectTime"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#3A3A3A"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <TimePicker
+                    android:id="@+id/timePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:timePickerMode="spinner" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_set_alert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/weather_card_background"
+                android:paddingHorizontal="12dp"
+                android:text="@string/SetAlert"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Date Picker Section -->
+
+    <!-- Time Picker Section -->
+
+    <!-- Set Alert Button -->
 
 </LinearLayout>

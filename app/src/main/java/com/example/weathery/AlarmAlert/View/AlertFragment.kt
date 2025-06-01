@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.weathery.AlarmAlert.Model.AlertItem
 import com.example.weathery.AlarmAlert.ViewModel.AlarmViewModel
-import com.example.weathery.View.INavFragmaent
+import com.example.weathery.Home.INavFragmaent
 import com.example.weathery.databinding.FragmentAlertBinding
+import kotlinx.coroutines.launch
 
 class AlertFragment : Fragment() {
     private var _binding: FragmentAlertBinding? = null
@@ -28,6 +30,7 @@ class AlertFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.alertRecyclerView.layoutManager = LinearLayoutManager(context)
+
         adapter = AlertAdapter(mutableListOf(), alertViewModel, viewLifecycleOwner.lifecycleScope)
         binding.alertRecyclerView.adapter = adapter
 
@@ -35,11 +38,17 @@ class AlertFragment : Fragment() {
             adapter.setAlerts(alertsList.toMutableList())
         }
 
+
+        lifecycleScope.launch {
+            alertViewModel.loadAlerts()
+        }
+
         binding.fab.setOnClickListener {
             val activity = requireActivity() as INavFragmaent
             activity.navigateTo(SelectTimeFragment(), false)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

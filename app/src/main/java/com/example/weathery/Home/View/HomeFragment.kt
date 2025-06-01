@@ -24,7 +24,7 @@ import com.example.weathery.ForecastAdapter
 import com.example.weathery.Home.LocationHelper
 import com.example.weathery.Home.ViewModel.WeatherViewModel
 import com.example.weathery.HourlyForecastAdapter
-import com.example.weathery.View.HomeActivity
+import com.example.weathery.Home.View.HomeActivity
 import com.example.weathery.WeatherDatabase
 import com.example.weathery.WeatherRepository
 import com.example.weathery.databinding.FragmentHomeBinding

@@ -14,8 +14,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.weathery.AlarmAlert.AlarmActivity
 import com.example.weathery.R
-import com.example.weathery.View.HomeActivity
-import com.example.weathery.View.INavFragmaent
+import com.example.weathery.Home.View.HomeActivity
+import com.example.weathery.Home.INavFragmaent
 import com.example.weathery.Home.View.HomeFragment
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint

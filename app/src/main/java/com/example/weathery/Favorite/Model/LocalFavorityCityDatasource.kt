@@ -1,21 +1,20 @@
 package com.example.weathery.Favorite.Model
 
 import com.example.weathery.Model.WeatherDao
+import com.example.weathery.Favorite.IFavoriteCityDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class LocalFavorityCityDatasource(var citydao : WeatherDao){
-    suspend fun getAllFavCities(): List<FavoriteCity> {
-        return citydao.getAllFavCities()
+class LocalFavorityCityDatasource(private val cityDao: WeatherDao) : IFavoriteCityDataSource {
+    override suspend fun getAllFavCities(): List<FavoriteCity> {
+        return cityDao.getAllFavCities()
     }
-    suspend fun insertFavCity(city: FavoriteCity){
-        withContext(Dispatchers.IO) {
-            citydao.insertFavorite(city)
-        }
+
+    override suspend fun insertFavCity(city: FavoriteCity) {
+        cityDao.insertFavorite(city)
     }
-    suspend fun deleteFavCity(city: FavoriteCity){
-        withContext(Dispatchers.IO) {
-            citydao.delete_fav_city(city)
-        }
+
+    override suspend fun deleteFavCity(city: FavoriteCity) {
+        cityDao.delete_fav_city(city)
     }
 }

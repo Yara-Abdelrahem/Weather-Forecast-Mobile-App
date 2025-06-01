@@ -23,7 +23,7 @@ import com.android.volley.toolbox.Volley
 import com.example.weathery.Favorite.Model.FavoriteCity
 import com.example.weathery.Favorite.Model.FavoriteCityRepositry
 import com.example.weathery.Favorite.Model.LocalFavorityCityDatasource
-import com.example.weathery.View.INavFragmaent
+import com.example.weathery.Home.INavFragmaent
 import com.example.weathery.Favorite.ViewModel.FavoriteCityViewModel
 import com.example.weathery.WeatherDatabase
 import kotlinx.coroutines.launch

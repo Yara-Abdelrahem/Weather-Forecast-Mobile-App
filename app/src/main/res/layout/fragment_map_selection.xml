@@ -9,12 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm Location"
+        android:text="@string/ConfirmLocation"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/weather_card_background"
+        />
 
 </FrameLayout>

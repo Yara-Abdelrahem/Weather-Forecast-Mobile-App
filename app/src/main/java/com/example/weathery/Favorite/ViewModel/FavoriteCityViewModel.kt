@@ -6,8 +6,7 @@ import com.example.weathery.Favorite.Model.FavoriteCity
 import com.example.weathery.Favorite.Model.FavoriteCityRepositry
 
 class FavoriteCityViewModel (var repo : FavoriteCityRepositry): ViewModel() {
-    private var favcitylist : MutableLiveData<List<FavoriteCity>> =
-        MutableLiveData<List<FavoriteCity>>()
+    private var favcitylist : MutableLiveData<List<FavoriteCity>> = MutableLiveData<List<FavoriteCity>>()
     var Fav_city_ret = favcitylist
 
     suspend fun getAllFavCity() : List<FavoriteCity>{

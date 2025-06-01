@@ -1,4 +1,4 @@
-package com.example.weathery.View
+package com.example.weathery.Home.View
 
 import android.Manifest
 import android.content.Context
@@ -11,20 +11,27 @@ import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import com.example.weathery.R
-import com.example.weathery.Favorite.View.ShowFavoriteFragment
-import com.example.weathery.Home.View.HomeFragment
-import com.example.weathery.Home.View.WelcomeChoiceFragment
 import com.example.weathery.AlarmAlert.View.AlertFragment
+import com.example.weathery.Favorite.View.ShowFavoriteFragment
+import com.example.weathery.Home.INavFragmaent
+import com.example.weathery.Home.LocationHelper
+import com.example.weathery.R
 import com.example.weathery.Settings.View.SettingsFragment
 import com.example.weathery.databinding.ActivityHomeBinding
-import com.example.weathery.Home.LocationHelper
+import java.util.Locale
 
 class HomeActivity : AppCompatActivity(), INavFragmaent {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var locHelper: LocationHelper
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    fun setLocale(context: Context, languageCode: String): Context {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = context.resources.configuration
+        config.setLocale(locale)
+        return context.createConfigurationContext(config)
+    }
 
     @RequiresPermission(allOf = [
         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -32,6 +39,13 @@ class HomeActivity : AppCompatActivity(), INavFragmaent {
     ])
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val prefs = getSharedPreferences("weather_prefs", MODE_PRIVATE)
+        val method = prefs.getString("location_method", null)
+        val language = prefs.getString(SettingsFragment.Companion.KEY_LANGUAGE, "English") ?: "English"
+        val languageCode = if (language == "English") "en" else "ar"
+
+        setLocale(this,languageCode)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -53,7 +67,7 @@ class HomeActivity : AppCompatActivity(), INavFragmaent {
 
         // ── 3) only once, pick welcome vs home ──
         if (savedInstanceState == null) {
-            val prefs = getSharedPreferences("weather_prefs", Context.MODE_PRIVATE)
+            val prefs = getSharedPreferences("weather_prefs", MODE_PRIVATE)
             val method = prefs.getString("location_method", null)
             val firstScreen: Fragment = when (method) {
                 null -> WelcomeChoiceFragment()

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AlarmAlert.View.AlertFragment">
+    tools:context=".AlarmAlert.View.AlertFragment"
+    android:background="#121212">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alertRecyclerView"
@@ -13,12 +14,14 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:text="Add Alert" />
+        android:text="@string/AddAlert"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/weather_card_background"/>
 
 </LinearLayout>

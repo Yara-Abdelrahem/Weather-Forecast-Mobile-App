@@ -1,6 +1,8 @@
 package com.example.weathery.Favorite.Model
 
-class FavoriteCityRepositry (val localDataSource:LocalFavorityCityDatasource){
+import com.example.weathery.Favorite.IFavoriteCityDataSource
+
+class FavoriteCityRepositry (val localDataSource:IFavoriteCityDataSource){
     companion object {
         @Volatile
         private var INSTANCE: FavoriteCityRepositry? = null

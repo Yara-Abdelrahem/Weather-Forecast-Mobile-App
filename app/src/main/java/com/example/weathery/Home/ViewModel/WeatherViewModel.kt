@@ -47,7 +47,18 @@ class WeatherViewModel(private val repo: WeatherRepository) : ViewModel() {
                         _error.value = null
                     },
                     onFailure = { err ->
-                        _error.value = err.message
+
+
+
+                        val allForecasts = repo.getForecastsWithLatLong(lat, lon)
+                        Log.d("WeatherViewModel", "Loaded ${allForecasts.size} forecasts for lat: $lat, lon: $lon")
+                        // Split forecasts into today's hourly and next-days daily averages
+                        val (hourlyToday, dailySummary) = repo.splitForecastItems(allForecasts, ZoneId.systemDefault())
+                        _hourlyForecasts.value = hourlyToday
+                        _dailySummaries.value = dailySummary
+                        // Also keep full list if needed
+                        _forecasts.value = allForecasts
+                        _error.value = null
                     }
                 )
             } catch (e: Exception) {

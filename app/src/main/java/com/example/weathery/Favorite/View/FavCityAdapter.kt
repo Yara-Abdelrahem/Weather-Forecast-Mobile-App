@@ -1,41 +1,36 @@
-package com.example.weathery.Favorite.View
-
-import com.example.weathery.R
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathery.Favorite.Model.FavoriteCity
-import com.example.weathery.View.IFavClickListener
+import com.example.weathery.Favorite.IFavClickListener
+import com.example.weathery.databinding.FavCityItemBinding
 
-class FavCityAdapter(val items: MutableLiveData<List<FavoriteCity>>, val listener: IFavClickListener)
-    : RecyclerView.Adapter<FavCityAdapter.ViewHolder>() {
+class FavCityAdapter(
+    private val items: MutableLiveData<List<FavoriteCity>>,
+    private val listener: IFavClickListener
+) : RecyclerView.Adapter<FavCityAdapter.ViewHolder>() {
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
-        val inflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.fav_city_item, parent, false)
-        return ViewHolder(view)
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = FavCityItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tv_city_name.text = items.value.get(position).city_name
+        val city = items.value?.get(position) ?: return
 
-        holder.tv_city_name.setOnClickListener {
-            Log.i("Fav city click" , "${items.value.get(position).city_name} clicked")
-            listener.onNameCityClick(items.value.get(position))
+        holder.binding.cityName.text = city.city_name
+
+        holder.binding.cityName.setOnClickListener {
+            Log.i("Fav city click", "${city.city_name} clicked")
+            listener.onNameCityClick(city)
         }
 
-        holder.btn_delet_fav_city.setOnClickListener {
+        holder.binding.btnRemoveCity.setOnClickListener {
             items.value?.let {
                 if (position >= 0 && position < it.size) {
-                    listener.onDeleteFavCityClick(it[position])
-
+                    listener.onDeleteFavCityClick(city)
                     val mutableList = it.toMutableList()
                     mutableList.removeAt(position)
                     items.value = mutableList
@@ -43,17 +38,11 @@ class FavCityAdapter(val items: MutableLiveData<List<FavoriteCity>>, val listene
                 }
             }
         }
-
     }
 
     override fun getItemCount(): Int {
-        return items.value.size
+        return items.value?.size ?: 0
     }
 
-
-    class ViewHolder(val item: View) : RecyclerView.ViewHolder(item) {
-        val tv_city_name = item.findViewById<TextView>(R.id.tv_city_name)
-        val btn_delet_fav_city = item.findViewById<Button>(R.id.btn_delete_fav_city)
-
-    }
+    class ViewHolder(val binding: FavCityItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

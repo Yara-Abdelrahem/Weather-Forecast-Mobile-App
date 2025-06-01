@@ -1,10 +1,9 @@
-package com.example.weathery.View
+package com.example.weathery.AlarmAlert.View
 
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weathery.R
-import com.example.weathery.AlarmAlert.View.AlertFragment
 
 class AlarmAlertActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer
